@@ -1,0 +1,75 @@
+﻿<Page x:Class="ECommerce_Project.Views.AdminViews.AdminDashboardPageView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ECommerce_Project.Views.AdminViews"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AdminDashboardPageView" Name="page" Background="#060405">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="170"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Background="#ff7740">
+
+            <StackPanel Grid.Column="0">
+
+
+                <StackPanel Orientation="Horizontal"  Width="250"  Height="30" Margin="0 25 0 0" x:Name="homePanel">
+                    <materialDesign:PackIcon Margin="35 0 0 0" Kind="Home" Foreground="White" Width="25" Height="25"/>
+                    <Button Width="100" Height="30" Margin="-5 0" BorderThickness="0" Content="Home" FontSize="15"
+                Background="Transparent" Command="{Binding HomeCommand}"
+                CommandParameter="{Binding ElementName=homePanel}"
+                Foreground="Aquamarine"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"  Width="252" Height="30" Margin="0 25 0 0" x:Name="customerPanel">
+                    <materialDesign:PackIcon Margin="35 0 0 0" Kind="People" Foreground="Aquamarine" Width="25" Height="25"/>
+                    <Button Width="125" Height="30" BorderThickness="0" Content="Customers" FontSize="15"
+                Background="Transparent" Command="{Binding CustomerCommand}"
+                CommandParameter="{Binding ElementName=customerPanel}"
+                Foreground="Aquamarine"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"  Width="250" Height="30" Margin="0 25 0 0" x:Name="productPanel">
+                    <materialDesign:PackIcon Margin="35 0 0 0" Kind="Package" Foreground="Aquamarine" Width="25" Height="25"/>
+                    <Button Width="140" Height="30" Margin="-15 0" BorderThickness="0" Content="Products" FontSize="15"
+                Background="Transparent" Command="{Binding ProductCommand}"
+                CommandParameter="{Binding ElementName=productPanel}"
+                Foreground="Aquamarine"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"   Width="255" Height="30" Margin="0 25 0 0" x:Name="orderPanel">
+                    <materialDesign:PackIcon Margin="35 0 0 0" Kind="Dependency" Foreground="Aquamarine" Width="25" Height="25"/>
+                    <Button Width="100" Height="30" BorderThickness="0" Content="Orders" FontSize="15"
+                Background="Transparent" Command="{Binding OrderCommand}"
+                CommandParameter="{Binding ElementName=orderPanel}"
+                Foreground="Aquamarine"/>
+                </StackPanel>
+
+                <StackPanel x:Name="categoryPanel" Orientation="Horizontal" Height="30" Margin="0 25 0 0">
+                    <materialDesign:PackIcon Margin="35 0 0 0" Kind="CategoryOutline" Foreground="Aquamarine" Width="25" Height="25"/>
+                    <Button Width="130" Height="30" BorderThickness="0" Content="Categories" FontSize="15"
+                Background="Transparent" Command="{Binding CategoryCommand}"
+                CommandParameter="{Binding ElementName=categoryPanel}"
+                Foreground="Aquamarine" Margin="-2 0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"  Width="249" Height="30" Margin="0 25 0 0" x:Name="logoutPanel">
+                    <materialDesign:PackIcon Margin="35 0 0 0" Kind="Logout" Foreground="Aquamarine" Width="25" Height="25"/>
+                    <Button Width="100" Height="30" Margin="2 0" BorderThickness="0" Content="Log Out" FontSize="15"
+                Background="Transparent" Command="{Binding LogOutCommand}"
+                CommandParameter="{Binding ElementName=page}"
+                Foreground="Aquamarine"/>
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+        <Frame Grid.Column="1" Content="{Binding CurrentPage}"/>
+    </Grid>
+
+</Page>

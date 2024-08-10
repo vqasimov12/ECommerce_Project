@@ -1,0 +1,12 @@
+﻿<NavigationWindow x:Class="ECommerce_Project.Views.CommonViews.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ECommerce_Project.Views.CommonViews"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" ShowsNavigationUI="False" WindowStyle="None" MinHeight="440" MinWidth="795" WindowStartupLocation="CenterScreen"  Width="800">
+    <NavigationWindow.Content>
+        <Frame />
+    </NavigationWindow.Content>
+</NavigationWindow>

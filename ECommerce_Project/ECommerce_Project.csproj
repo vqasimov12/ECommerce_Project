@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Entity\Interfaces\" />
+    <Folder Include="ViewModels\UserViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
+    <PackageReference Include="SimpleInjector" Version="5.4.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Components\BindablePasswordBox.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+  </ItemGroup>
+
+</Project>
