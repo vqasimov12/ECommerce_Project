@@ -21,7 +21,7 @@
         </Border>
         <StackPanel Orientation="Horizontal">
             <StackPanel Width="350">
-                <Image Source="https://png.pngtree.com/background/20230617/original/pngtree-digital-depiction-of-the-online-shopping-experience-picture-image_3699648.jpg" Width="400" Height="300" VerticalAlignment="Top" Margin="0 60 0 0 " Stretch="Uniform" />
+                <Image Source="https://res.cloudinary.com/doolsly8j/image/upload/v1723491675/xrlsngime8wns6evlx66.png" Width="400" Height="300" VerticalAlignment="Top" Margin="0 60 0 0 " Stretch="Uniform" />
             </StackPanel>
             <StackPanel Width="350">
                 <StackPanel Margin="20 40">

@@ -47,6 +47,9 @@ public class LoginPageViewModel : BaseViewModel
         if (window is null) return;
         window.ResizeMode = window.ResizeMode | ResizeMode.CanResize;
         window.WindowStyle = WindowStyle.SingleBorderWindow;
+        window.Width = 1070;
+        window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+        window.Height = 630;
         var _page = App.Container.GetInstance<AdminDashboardPageView>();
         var datacontext = App.Container.GetInstance<AdminDashboardPageViewModel>();
         _page.DataContext = datacontext;

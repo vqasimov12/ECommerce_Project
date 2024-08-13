@@ -10,6 +10,7 @@ public class Person : NotifyPropertyChangedService
     private string? address;
     private string? phone;
     private string? password;
+    private string? image;
     public Person()
     {
         Name = "";
@@ -21,6 +22,7 @@ public class Person : NotifyPropertyChangedService
     }
     public int Id { get => id; set { id = value; OnPropertyChanged(); } }
     public string? Name { get => name; set { name = value; OnPropertyChanged(); } }
+    public string? Image { get => image; set { image = value; OnPropertyChanged(); } }
     public string? Surname { get => surname; set { surname = value; OnPropertyChanged(); } }
     public string? Email { get => email; set { email = value; OnPropertyChanged(); } }
     public string? Address { get => address; set { address = value; OnPropertyChanged(); } }

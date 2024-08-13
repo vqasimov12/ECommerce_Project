@@ -32,25 +32,25 @@
                          Background="Transparent"
                          Foreground="#fef3d6" Visibility="{Binding TextVisiblity, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="-13 0 0 0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="-3 0 0 0">
                     <Button Content="Add" Width="80"  Margin="15 10"  Command="{Binding AddCommand}"
                             Style="{StaticResource MaterialDesignFlatButton}"
-                            Background="#d94448"
+                            Background="#ff7740"
                             Foreground="#fef3d6"/>
 
                     <Button Content="Edit" Width="80"
                             Style="{StaticResource MaterialDesignFlatButton}" Margin="0 10 15 10" 
-                            Background="#d94448"
+                            Background="#ff7740"
                             Foreground="#fef3d6" Command="{Binding EditCommand}" CommandParameter="{Binding ElementName= List}"/>
 
                     <Button Content="Delete" Width="80" 
                             Style="{StaticResource MaterialDesignFlatButton}" Margin="0 10 15 10" 
-                            Background="#d94448"
+                            Background="#ff7740"
                             Foreground="#fef3d6" Command="{Binding DeleteCommand}"  CommandParameter="{Binding ElementName= List}"/>
                 </StackPanel>
             </StackPanel>
 
-            <Grid Grid.Column="1" Background="White" Margin="0,20,-20,20">
+            <Grid Grid.Column="1" Background="White" Margin="59,76,48,24">
                 <ListView x:Name="List" ItemsSource="{Binding Categories}" MinHeight="200" 
               HorizontalAlignment="Stretch" 
               MinWidth="150"        ScrollViewer.HorizontalScrollBarVisibility="Auto"

@@ -4,6 +4,8 @@ using ECommerce_Project.Views.AdminViews;
 using ECommerce_Project.Views.CommonViews;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows;
+using System.Windows.Navigation;
 
 namespace ECommerce_Project.ViewModels.AdminViewModels;
 
@@ -41,10 +43,10 @@ public class AdminDashboardPageViewModel : BaseViewModel
         stackPanel.Tag = "Selected";
         PreviouslySelectedPanel = stackPanel;
         var _page = App.Container.GetInstance<AdminCategoryPageView>();
-            var datacontext= App.Container.GetInstance<AdminCategoryPageViewModel>();
+        var datacontext = App.Container.GetInstance<AdminCategoryPageViewModel>();
         datacontext.RefreshCategories();
         _page.DataContext = datacontext;
-        
+
         CurrentPage = _page;
     }
     #endregion
@@ -61,6 +63,11 @@ public class AdminDashboardPageViewModel : BaseViewModel
             PreviouslySelectedPanel.Tag = null;
         stackPanel.Tag = "Selected";
         PreviouslySelectedPanel = stackPanel;
+        var _page = App.Container.GetInstance<AdminHomePageView>();
+        var datacontext = App.Container.GetInstance<AdminHomePageViewModel>();
+        //datacontext.RefreshCategories();
+        _page.DataContext = datacontext;
+        CurrentPage = _page;
     }
 
     #endregion
@@ -77,6 +84,11 @@ public class AdminDashboardPageViewModel : BaseViewModel
             PreviouslySelectedPanel.Tag = null;
         stackPanel.Tag = "Selected";
         PreviouslySelectedPanel = stackPanel;
+        var _page = App.Container.GetInstance<AdminCustomersPageView>();
+        var datacontext = App.Container.GetInstance<AdminCustomersPageViewModel>();
+        datacontext.RefreshDataSource();
+        _page.DataContext = datacontext;
+        CurrentPage = _page;
     }
 
     #endregion
@@ -93,6 +105,11 @@ public class AdminDashboardPageViewModel : BaseViewModel
             PreviouslySelectedPanel.Tag = null;
         stackPanel.Tag = "Selected";
         PreviouslySelectedPanel = stackPanel;
+        var _page = App.Container.GetInstance<AdminProductPageView>();
+        var datacontext = App.Container.GetInstance<AdminProductPageViewModel>();
+        datacontext.RefreshDataSource();
+        _page.DataContext = datacontext;
+        CurrentPage = _page;
     }
 
     #endregion
@@ -120,6 +137,11 @@ public class AdminDashboardPageViewModel : BaseViewModel
         var page = obj as Page;
         var _page = App.Container.GetInstance<LoginPageView>();
         _page.DataContext = App.Container.GetInstance<LoginPageViewModel>();
+        var window = NavigationWindow.GetWindow(page);
+        window.Height = 450;
+        window.Width = 800;
+        window.ResizeMode = ResizeMode.NoResize;
+        window.WindowStyle = WindowStyle.None;
         page.NavigationService.Navigate(_page);
     }
 

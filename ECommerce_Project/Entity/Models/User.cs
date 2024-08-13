@@ -14,17 +14,18 @@ public class User : Person
 
     public User()
     {
-
+        Image = @"https://res.cloudinary.com/doolsly8j/image/upload/v1723499492/n6xzqkrauos2nb0pvlpr.jpg";
     }
 
     public void SetUser(User _user)
     {
+        Image = _user.Image;
         Name = _user.Name;
         Surname = _user.Surname;
         Email = _user.Email;
-        Password=_user.Password;
+        Password = _user.Password;
         Address = _user.Address;
-        Phone=_user.Phone;
+        Phone = _user.Phone;
     }
     public static bool operator ==(User left, User right)
     {
