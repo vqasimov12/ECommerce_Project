@@ -54,7 +54,7 @@ public class AdminProductPageViewModel : BaseViewModel
         foreach (var i in orderprod)
             Products.Add(i);
     }
-    
+
     #region Commands
 
     #region AddCommand
@@ -79,6 +79,7 @@ public class AdminProductPageViewModel : BaseViewModel
 
         var uploadResult = cloudinary.Upload(uploadParams);
         string imageUrl = uploadResult.SecureUrl.ToString();
+        Product.Quantity ??= 0;
         Product.Image = imageUrl;
         db.Products.Add(Product);
         db.SaveChanges();
@@ -124,6 +125,7 @@ public class AdminProductPageViewModel : BaseViewModel
 
             var uploadResult = cloudinary.Upload(uploadParams);
             string imageUrl = uploadResult.SecureUrl.ToString();
+            Product.Quantity ??= 0;
             Product.Image = imageUrl;
             Product.Category = Category;
             pr.SetProduct(Product);
@@ -183,11 +185,11 @@ public class AdminProductPageViewModel : BaseViewModel
     {
         var cb = obj as ComboBox;
         if (cb is null || cb.SelectedItem is null) return;
-        var cat=cb.SelectedItem as Category;
-        if(cat is null) return;
-        using var db=new AppDataContext();
+        var cat = cb.SelectedItem as Category;
+        if (cat is null) return;
+        using var db = new AppDataContext();
         var _p = db.Products
-               .Include(x => x.Category) 
+               .Include(x => x.Category)
                .Where(x => x.Category.Name == cat.Name)
                .ToList();
         Products = new ObservableCollection<Product>(_p);
@@ -196,7 +198,7 @@ public class AdminProductPageViewModel : BaseViewModel
 
     #region RefreshCommand  
     public ICommand RefreshCommand { get; set; }
-    public void RefreshCommandExecute(object?obj)
+    public void RefreshCommandExecute(object? obj)
     {
         RefreshDataSource();
     }

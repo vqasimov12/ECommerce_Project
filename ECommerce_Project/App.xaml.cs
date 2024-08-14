@@ -6,6 +6,7 @@ using ECommerce_Project.Entity.Models;
 using ECommerce_Project.Views.UserViews;
 using ECommerce_Project.Views.AdminViews;
 using ECommerce_Project.ViewModels.AdminViewModels;
+using ECommerce_Project.ViewModels.UserViewModels;
 
 namespace ECommerce_Project;
 public partial class App : Application
@@ -29,6 +30,8 @@ public partial class App : Application
         Container.RegisterSingleton<AdminProductPageView>();
         Container.RegisterSingleton<AdminCustomersPageView>();
         Container.RegisterSingleton<AdminHomePageView>();
+        Container.RegisterSingleton<UserDashboardPageView>();
+        
     }
     void RegisterViewModels()
     {
@@ -39,6 +42,7 @@ public partial class App : Application
         Container.RegisterSingleton<AdminProductPageViewModel>();
         Container.RegisterSingleton<AdminCustomersPageViewModel>();
         Container.RegisterSingleton<AdminHomePageViewModel>();
+        Container.RegisterSingleton<UserDasboardPageViewModel>();
 
     }
     protected override void OnStartup(StartupEventArgs e)

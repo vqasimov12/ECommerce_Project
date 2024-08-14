@@ -65,7 +65,7 @@ public class AdminDashboardPageViewModel : BaseViewModel
         PreviouslySelectedPanel = stackPanel;
         var _page = App.Container.GetInstance<AdminHomePageView>();
         var datacontext = App.Container.GetInstance<AdminHomePageViewModel>();
-        //datacontext.RefreshCategories();
+        datacontext.RefreshDataSource();
         _page.DataContext = datacontext;
         CurrentPage = _page;
     }

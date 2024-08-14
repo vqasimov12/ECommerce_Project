@@ -4,166 +4,83 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ECommerce_Project.Views.AdminViews"
+      xmlns:materialdesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AdminHomePageView">
 
-    <!--#region NewRegion -->
-    <!--<Grid Margin="10">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        -->
-    <!-- Title -->
-    <!--
-        <TextBlock Text="Admin Statistics" 
-                   FontSize="24" 
-                   FontWeight="Bold" 
-                   Foreground="White" 
-                   HorizontalAlignment="Center"
-                   Margin="0,0,0,20"/>
-
-        -->
-    <!-- Selection Controls -->
-    <!--
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
-            -->
-    <!-- DatePicker -->
-    <!--
-            <DatePicker SelectedDate="{Binding SelectedDate}" 
-                        Margin="10"
-                        Foreground="Black"
-                        Background="White"
-                      />
-
-            -->
-    <!-- Categories ComboBox -->
-    <!--
-            <ComboBox ItemsSource="{Binding Categories}" 
-                      SelectedItem="{Binding SelectedCategory}"
-                      DisplayMemberPath="Name"
-                      Foreground="Black"
-                      Background="White"
-                      Margin="10">
-                <ComboBoxItem Content="Select Category" IsSelected="True"/>
-            </ComboBox>
-
-            -->
-    <!-- Products ComboBox -->
-    <!--
-            <ComboBox ItemsSource="{Binding Products}" 
-                      SelectedItem="{Binding SelectedProduct}"
-                      DisplayMemberPath="Name"
-                      Foreground="Black"
-                      Background="White"
-                      Margin="10">
-                <ComboBoxItem Content="Select Product" IsSelected="True"/>
-            </ComboBox>
-
-            -->
-    <!-- Users ComboBox -->
-    <!--
-            <ComboBox ItemsSource="{Binding Users}" 
-                      SelectedItem="{Binding SelectedUser}"
-                      DisplayMemberPath="Name"
-                      Foreground="Black"
-                      Background="White"
-                      Margin="10">
-                <ComboBoxItem Content="Select User" IsSelected="True"/>
-            </ComboBox>
-
-            -->
-    <!-- Orders ComboBox -->
-    <!--
-            <ComboBox ItemsSource="{Binding Orders}" 
-                      SelectedItem="{Binding SelectedOrder}"
-                      DisplayMemberPath="OrderNumber"
-                      Foreground="Black"
-                      Background="White"
-                      Margin="10">
-                <ComboBoxItem Content="Select Order" IsSelected="True"/>
-            </ComboBox>
-        </StackPanel>
-
-        -->
-    <!-- Statistics Panel -->
-    <!--
-        <Grid Grid.Row="2">
+        <!-- Main Container Grid -->
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            -->
-    <!-- Date-based Statistics -->
-    <!--
-            <Border Grid.Column="0" Margin="10" Padding="20" Background="#1F1F1F" CornerRadius="10">
-                <StackPanel>
-                    <TextBlock Text="Statistics for Selected Date" 
-                               FontSize="18" 
-                               Foreground="White" 
-                               FontWeight="Bold" 
-                               HorizontalAlignment="Center"
-                               Margin="0,0,0,20"/>
-
-                    <TextBlock Text="Products Sold:" 
-                               FontSize="16" 
-                               Foreground="White"/>
-                    <TextBlock Text="{Binding ProductsSoldOnDate}" 
-                               FontSize="36" 
-                               Foreground="White" 
-                               FontWeight="Bold" 
-                               HorizontalAlignment="Center"/>
-
-                    <TextBlock Text="Total Income:" 
-                               FontSize="16" 
-                               Foreground="White"/>
-                    <TextBlock Text="{Binding TotalIncomeOnDate}" 
-                               FontSize="36" 
-                               Foreground="White" 
-                               FontWeight="Bold" 
-                               HorizontalAlignment="Center"/>
+            <!--#region Total Orders -->
+            <Border Grid.Column="0" Background="#007B7F" Padding="5"  Margin="5" CornerRadius="10">
+                <StackPanel Orientation="Horizontal">
+                    <materialdesign:PackIcon Kind="Package" Width="50" Foreground="White" Height="50"/>
+                    <StackPanel Margin="8 0 0 0">
+                        <TextBlock Text="Total " FontSize="20" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Margin="15 0" Text=" Orders" FontSize="20" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text="{Binding TotalOrderCount}" FontSize="30" Margin="0 5 0 0" Foreground="White" FontWeight="Bold"/>
+                    </StackPanel>
                 </StackPanel>
             </Border>
+            <!--#endregion-->
 
-            -->
-    <!-- Selected Item Statistics -->
-    <!--
-            <Border Grid.Column="1" Margin="10" Padding="20" Background="#1F1F1F" CornerRadius="10">
-                <StackPanel>
-                    <TextBlock Text="Selected Item Statistics" 
-                               FontSize="18" 
-                               Foreground="White" 
-                               FontWeight="Bold" 
-                               HorizontalAlignment="Center"
-                               Margin="0,0,0,20"/>
-
-                    <ListView ItemsSource="{Binding SelectedStatistics}" 
-                              Foreground="White"
-                              Background="#1F1F1F">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Statistic" DisplayMemberBinding="{Binding StatisticName}" Width="150"/>
-                                <GridViewColumn Header="Value" DisplayMemberBinding="{Binding StatisticValue}" Width="150"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+            <!--#region Total Customers -->
+            <Border Grid.Column="1" Background="#007B7F" Padding="10" Margin="5" CornerRadius="10">
+                <StackPanel Orientation="Horizontal">
+                    <materialdesign:PackIcon Kind="AccountMultiple" Width="50" Foreground="White" Height="50"/>
+                    <StackPanel Margin="8 0 0 0">
+                        <TextBlock Text="Total " FontSize="19" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock  Text=" Customers" FontSize="19" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text="{Binding TotalCustomerCount}" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                    </StackPanel>
                 </StackPanel>
             </Border>
-        </Grid>
-    </Grid>-->
-    <!--#endregion-->
+            <!--#endregion-->
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="3.2*"/>
-        </Grid.RowDefinitions>
-        <Grid Background="ForestGreen">
-            
+            <!--#region Today's Income -->
+            <Border Grid.Column="2" Background="#007B7F" Padding="10" Margin="5" CornerRadius="10">
+                <StackPanel Orientation="Horizontal">
+                    <materialdesign:PackIcon Kind="CashMultiple" Width="50" Foreground="White" Height="50"/>
+                    <StackPanel Margin="8 0 0 0">
+                        <TextBlock Text="Total " FontSize="20" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Margin="20 0"  Text="Income" FontSize="20" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text="{Binding TotalIncome}" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <!--#endregion-->
+
+            <!--#region Select DateTime -->
+            <Border Grid.Column="3" Background="#007B7F" Padding="10" Margin="5" CornerRadius="10">
+                <StackPanel >
+                    <StackPanel Orientation="Horizontal" Margin="8 0 0 0">
+                    <materialdesign:PackIcon Kind="DateRange" Width="50" Foreground="White" Height="50"/>
+                        <TextBlock Margin="0 15"   Text="Select Date" FontSize="20" FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        
+                    <DatePicker Height="30" Width="100" Margin=" 0 8 0 0" SelectedDate="{Binding SelectedDate}"  FontSize="30" Foreground="White" FontWeight="Bold" Style="{StaticResource MaterialDesignFilledDatePicker}"/>
+
+                        <Button Margin="15 0" Background="Transparent"   BorderBrush="Transparent" Height="40" Command="{Binding RefreshCommand}">
+                            <materialdesign:PackIcon Kind="Refresh"  FontSize="50" FontWeight="Bold" VerticalAlignment="Bottom" Margin="0 14 0 0"/>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <!--#endregion-->
         </Grid>
     </Grid>
 </Page>
