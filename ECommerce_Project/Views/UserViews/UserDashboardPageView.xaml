@@ -7,7 +7,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="UserDashboardPageView">
+      Title="UserDashboardPageView" Name="page" Background="#060405">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -24,13 +24,13 @@
                     <Button Width="100" Height="30" Margin="-5 0" BorderThickness="0" Content="Home" FontSize="15"
               Background="Transparent" Command="{Binding HomeCommand}"
               CommandParameter="{Binding ElementName=homePanel}"
-              Foreground="Aquamarine"/>
+              Foreground="Aquamarine" />
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal"  Width="250" Height="30" Margin="0 25 0 0" x:Name="CartPanel">
                     <materialDesign:PackIcon Margin="35 0 0 0" Kind="Cart" Foreground="Aquamarine" Width="25" Height="25"/>
                     <Button Width="140" Height="30" Margin="4 0" BorderThickness="0" Content="Shopping Cart" FontSize="15"
-              Background="Transparent" Command="{Binding ProductCommand}"
+              Background="Transparent" Command="{Binding CartCommand}"
               CommandParameter="{Binding ElementName=CartPanel}"
               Foreground="Aquamarine"/>
                 </StackPanel>

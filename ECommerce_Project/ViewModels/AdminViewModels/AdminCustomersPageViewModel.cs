@@ -15,7 +15,6 @@ public class AdminCustomersPageViewModel : BaseViewModel
     public AdminCustomersPageViewModel()
     {
         RemoveCommand = new RelayCommand(RemoveCommandExecute);
-        Click = new RelayCommand(ClickE);
         RefreshDataSource();
     }
     public void RefreshDataSource()
@@ -26,11 +25,6 @@ public class AdminCustomersPageViewModel : BaseViewModel
             Users.Add(user);
     }
 
-    public ICommand Click { get; set; }
-    public void ClickE(object?obj)
-    {
-        MessageBox.Show("");
-    }
     #region RemoveCommand
     public ICommand RemoveCommand { get; set; }
     public void RemoveCommandExecute(object? obj)

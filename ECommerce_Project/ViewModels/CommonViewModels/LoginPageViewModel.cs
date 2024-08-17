@@ -1,4 +1,5 @@
 ﻿using ECommerce_Project.Command;
+using ECommerce_Project.Entity.Models;
 using ECommerce_Project.ViewModels.AdminViewModels;
 using ECommerce_Project.ViewModels.UserViewModels;
 using ECommerce_Project.Views.AdminViews;
@@ -53,8 +54,8 @@ public class LoginPageViewModel : BaseViewModel
         //        window.Width = 1070;
         //        window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         //        window.Height = 630;
-        //        var _page = App.Container.GetInstance<UserDashboardPageView>();
-        //        var datacontext = App.Container.GetInstance<UserDasboardPageViewModel>();
+        //        var _page = App.Container.GetInstance<AdminDashboardPageView>();
+        //        var datacontext = App.Container.GetInstance<AdminDashboardPageViewModel>();
         //        _page.DataContext = datacontext;
         //        var currentPage = App.Container.GetInstance<AdminHomePageView>();
         //        var data = App.Container.GetInstance<AdminHomePageViewModel>();
@@ -83,6 +84,8 @@ public class LoginPageViewModel : BaseViewModel
         //if (user is not null)
         //    if (user.Password == Password)
         //    {
+        using var db = new AppDataContext();
+        user = db.Users.FirstOrDefault();
         var page = obj as Page;
         if (page is null) return;
         var window = Window.GetWindow(page);
@@ -94,12 +97,14 @@ public class LoginPageViewModel : BaseViewModel
         window.Height = 630;
         var _page = App.Container.GetInstance<UserDashboardPageView>();
         var datacontext = App.Container.GetInstance<UserDasboardPageViewModel>();
+        datacontext.User = user;
         _page.DataContext = datacontext;
-        //var currentPage = App.Container.GetInstance<AdminHomePageView>();
-        //var data = App.Container.GetInstance<AdminHomePageViewModel>();
-        //data.RefreshDataSource();
-        //currentPage.DataContext = data;
-        //datacontext.CurrentPage = currentPage;
+        var currentPage = App.Container.GetInstance<UserHomePageView>();
+        var data = App.Container.GetInstance<UserHomePageViewModel>();
+        data.RefreshDataSource();
+        data.User = user;
+        currentPage.DataContext = data;
+        datacontext.CurrentPage = currentPage;
         if (datacontext.PreviouslySelectedPanel is not null)
         {
             datacontext.PreviouslySelectedPanel.Tag = null;

@@ -4,13 +4,13 @@ using System.Collections.ObjectModel;
 namespace ECommerce_Project.Entity.Models;
 public class User : Person
 {
-    private ObservableCollection<Product> orders;
-    private ObservableCollection<Product> favouriteProducts;
-    private ObservableCollection<Product> shoppingCart;
+    private ObservableCollection<ProductView> orders = [];
+    private ObservableCollection<Product> favouriteProducts = [];
+    private ObservableCollection<ProductView> shoppingCart = [];
 
-    public ObservableCollection<Product> Orders { get => orders; set { orders = value; OnPropertyChanged(); } }
+    public ObservableCollection<ProductView> Orders { get => orders; set { orders = value; OnPropertyChanged(); } }
     public ObservableCollection<Product> FavouriteProducts { get => favouriteProducts; set { favouriteProducts = value; OnPropertyChanged(); } }
-    public ObservableCollection<Product> ShoppingCart { get => shoppingCart; set { shoppingCart = value; OnPropertyChanged(); } }
+    public ObservableCollection<ProductView> ShoppingCart { get => shoppingCart; set { shoppingCart = value; OnPropertyChanged(); } }
 
     public User()
     {
@@ -26,6 +26,9 @@ public class User : Person
         Password = _user.Password;
         Address = _user.Address;
         Phone = _user.Phone;
+        ShoppingCart = _user.ShoppingCart;
+        FavouriteProducts = _user.FavouriteProducts;
+        Orders = _user.Orders;
     }
     public static bool operator ==(User left, User right)
     {

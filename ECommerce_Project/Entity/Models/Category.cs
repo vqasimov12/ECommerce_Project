@@ -5,7 +5,7 @@ namespace ECommerce_Project.Entity.Models;
 
 public class Category:NotifyPropertyChangedService
 {
-    private string name;
+    private string name="";
 
     public int Id { get; set; }
     public string Name { get => name; set { name = value; OnPropertyChanged(); }}

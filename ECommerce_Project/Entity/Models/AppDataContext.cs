@@ -1,16 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce_Project.Entity.Models;
-public class AppDataContext:DbContext
+public class AppDataContext : DbContext
 {
-    public DbSet<User>Users { get; set; }
+    public DbSet<User> Users { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<Product> Products { get; set; }
-    public DbSet<Category>Categories { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<ProductView>ProductViews{get;set;}
     public AppDataContext()
     {
         //Database.EnsureDeleted();
-        Database.EnsureCreated(); 
+        Database.EnsureCreated();
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

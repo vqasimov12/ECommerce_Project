@@ -31,6 +31,8 @@ public partial class App : Application
         Container.RegisterSingleton<AdminCustomersPageView>();
         Container.RegisterSingleton<AdminHomePageView>();
         Container.RegisterSingleton<UserDashboardPageView>();
+        Container.RegisterSingleton<UserHomePageView>();
+        Container.RegisterSingleton<UserShoppingCartPageView>();
         
     }
     void RegisterViewModels()
@@ -43,6 +45,8 @@ public partial class App : Application
         Container.RegisterSingleton<AdminCustomersPageViewModel>();
         Container.RegisterSingleton<AdminHomePageViewModel>();
         Container.RegisterSingleton<UserDasboardPageViewModel>();
+        Container.RegisterSingleton<UserHomePageViewModel>();
+        Container.RegisterSingleton<UserShoppingCartPageViewModel>();
 
     }
     protected override void OnStartup(StartupEventArgs e)

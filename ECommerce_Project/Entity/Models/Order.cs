@@ -10,5 +10,5 @@ public class Order
     public DateTime OrderDate { get; set; }
     public DateTime DeliveryDate { get; set; }
     public int Quantity { get; set; }
-    public ObservableCollection<Product> Products { get; set; } = [];
+    public ObservableCollection<ProductView> Products { get; set; } = [];
 }

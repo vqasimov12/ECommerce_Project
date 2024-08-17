@@ -9,6 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Icons\Dislike.png" />
+    <None Remove="Icons\Like.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Icons\Dislike.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\Like.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Entity\Interfaces\" />
   </ItemGroup>
 
