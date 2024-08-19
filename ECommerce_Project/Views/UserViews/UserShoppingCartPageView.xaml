@@ -15,65 +15,96 @@ xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 
     <Grid Background="#F4F4F4">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2.5*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
         <!--Shopping Cart Section-->
-        <StackPanel Grid.Column="0" Background="#F9F9F9" Margin="10" >
+        <StackPanel Grid.Column="0" Background="#F9F9F9" Margin="10">
             <TextBlock Text="Your Shopping Cart" FontSize="24" FontWeight="Bold" Foreground="#333" Margin="0 0 0 20"/>
 
-            <!--Cart Items-->
+            <!-- Cart Items with Column Headers -->
             <ScrollViewer MaxHeight="400" VerticalScrollBarVisibility="Auto">
-                <ListView x:Name="List" ItemsSource="{Binding User.ShoppingCart}" Background="Transparent" BorderThickness="0">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Border Background="#FFF" CornerRadius="10" Padding="5" Margin="0 0 0 5">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="370"/>
-                                    </Grid.ColumnDefinitions>
+                <ListView x:Name="List" ScrollViewer.HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding Products}" Background="Transparent" BorderThickness="0">
+                    <ListView.View>
+                        <GridView>
+                            <!-- Product Image Column -->
+                            <GridViewColumn Header="Image" Width="100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border Width="60" Height="60" CornerRadius="30" VerticalAlignment="Center">
+                                            <Image Source="{Binding Product.Image}" Stretch="Uniform"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                                    <!-- Product Image -->
-                                    <Border Width="60" Height="60" CornerRadius="30" VerticalAlignment="Center" Grid.Column="0">
-                                        <Image Source="{Binding Product.Image}" Stretch="Uniform"/>
-                                    </Border>
+                            <!-- Product Details Column -->
+                            <GridViewColumn Header="Product Details" Width="auto">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Product.ProductName}" FontWeight="Bold" FontSize="16" Foreground="#333"/>
+                                            <TextBlock Text="{Binding Product.Category.Name}" Foreground="Gray" FontSize="14"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                                    <!-- Product Details -->
-                                    <StackPanel Grid.Column="1" Margin="10,0">
-                                        <TextBlock Text="{Binding Product.ProductName}" FontWeight="Bold" FontSize="16" Foreground="#333"/>
-                                        <TextBlock Text="{Binding Product.Category.Name}" Foreground="Gray" FontSize="14"/>
-                                    </StackPanel>
+                            <!-- Quantity and Actions Column -->
+                            <GridViewColumn Header="   Quantity     " Width="110">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <!-- Decrease Button -->
+                                            <Button Height="30" BorderThickness="0" Background="Transparent" Command="{Binding ElementName=List,Path=DataContext.DecreaseCommand}" CommandParameter="{Binding}" Margin="5 0 -3 0">
+                                                <materialDesign:PackIcon Foreground="#FF5722" Kind="Minus"/>
+                                            </Button>
 
-                                    <!-- Quantity and Price -->
-                                    <StackPanel Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right"  >
-                                        <!-- Decrease Button -->
-                                        <Button Width="30" Height="30" Background="Transparent" BorderThickness="0"  Command="{Binding ElementName=List,Path=DataContext.DecreaseCommand}" CommandParameter="{Binding}" Margin="5 0">
-                                            <materialDesign:PackIcon Foreground="#FF5722" Kind="Minus"/>
+                                            <TextBlock Width="20" Text="{Binding Count}" FontSize="16" />
+
+                                            <!-- Increase Button -->
+                                            <Button Height="30" BorderThickness="0" Background="Transparent" Command="{Binding ElementName=List,Path=DataContext.IncreaseCommand}" CommandParameter="{Binding}" Margin="-10 0 0 0" >
+                                                <materialDesign:PackIcon Foreground="#FF5722" Kind="Plus"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!-- Total Price Column -->
+                            <GridViewColumn Header="Total Price" Width="97">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding TotalPrice}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!-- Remove Button Column -->
+                            <GridViewColumn Header="Remove" Width="auto">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Height="30" BorderThickness="0" Background="Transparent" Command="{Binding ElementName=List,Path=DataContext.RemoveCommand}" CommandParameter="{Binding}">
+                                            <materialDesign:PackIcon FontSize="20" Foreground="#FF5722" Kind="Close"/>
                                         </Button>
-
-                                        <TextBlock Text="{Binding Count}" FontSize="16" VerticalAlignment="Center"/>
-
-
-                                        <!-- Increase Button -->
-                                        <Button Width="30" Height="30" Background="Transparent" BorderThickness="0"  Command="{Binding ElementName=List,Path=DataContext.IncreaseCommand}" CommandParameter="{Binding}" Margin="5 0">
-                                            <materialDesign:PackIcon Foreground="#FF5722" Kind="Plus"/>
-                                        </Button>
-
-                                        <TextBlock Text="{Binding TotalPrice}" FontSize="16" VerticalAlignment="Center" Margin="20,0,0,0"/>
-
-                                        <!-- Remove Button -->
-                                        <Button Width="30" Margin="10 0 0 0" Height="30" Background="#E0E0E0" BorderThickness="0"  Command="{Binding ElementName=List,Path=DataContext.RemoveCommand}" CommandParameter="{Binding}">
-                                            <materialDesign:PackIcon Foreground="#FF5722" Kind="Close"/>
-                                        </Button>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
                 </ListView>
             </ScrollViewer>
+        </StackPanel>
+        <StackPanel Grid.Column="1" VerticalAlignment="Bottom" Margin="20">
+            <StackPanel Orientation="Horizontal">
+
+                <TextBlock Text="Total:" FontSize="16" FontWeight="Bold" Foreground="#333"/>
+                <TextBlock Text="{Binding SubTotal, StringFormat=\{0\}$}" FontSize="20" Margin="20 -3" FontWeight="Bold" Foreground="#FF5722"/>
+            </StackPanel>
+            <Button Width="100" Margin="20 10" Command="{Binding PurchaseCommand}" >
+                <materialDesign:PackIcon Kind="Cart"/>
+            </Button>
         </StackPanel>
     </Grid>
     <!--#endregion-->

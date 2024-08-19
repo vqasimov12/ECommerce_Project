@@ -58,26 +58,6 @@
                    FontSize="30"
                    HorizontalAlignment="Left"
                    Margin="5 10"/>
-        <!-- Existing WrapPanel for Categories, Producers, and Buttons -->
-        <!--
-        <WrapPanel>
-            <ComboBox x:Name="categoriesList" DockPanel.Dock="Left" Margin="25 0 5 0" Width="400" 
-                  ItemsSource="{Binding Categories, UpdateSourceTrigger=PropertyChanged}" 
-                  DisplayMemberPath="Name" VerticalAlignment="Center" FontSize="20" 
-                  SelectedItem="{Binding SelectedCategory}"/>
-            <Button Width="45px" Height="45px" Background="Transparent" Command="{Binding RefreshCategories}">
-                <Image HorizontalAlignment="Left"/>
-            </Button>
-            <ComboBox x:Name="producersList" DockPanel.Dock="Left" Margin="20 0 5 0" Width="200" 
-                  ItemsSource="{Binding Producers, UpdateSourceTrigger=PropertyChanged}" 
-                  DisplayMemberPath="Name" VerticalAlignment="Center" FontSize="20" 
-                  SelectedItem="{Binding SelectedProducer}"/>
-            <Button Width="45px" Height="45px" Background="Transparent" Command="{Binding RefreshProducers}">
-                <Image HorizontalAlignment="Left"/>
-            </Button>
-        </WrapPanel>-->
-
-        <!-- Filters -->
         <StackPanel Grid.Row="1">
 
             <StackPanel Orientation="Horizontal"  Margin="5">
@@ -116,11 +96,7 @@
                         </Style>
                     </ComboBox.ItemContainerStyle>
                 </ComboBox>
-                <!--<ComboBox Width="150" Margin="20 0" VerticalAlignment="Center" FontSize="16" Foreground="White" Name="combobox"
-        ItemsSource="{Binding Categories}"
-        DisplayMemberPath="Name"
-        SelectedItem="{Binding CategoryFilter}"
-        materialDesign:HintAssist.Hint="Select Category" />-->
+
 
                 <Button  Width="100" Height="35" Command="{Binding ApplyFiltersCommand}"
     CommandParameter="{Binding ElementName=combobox}"   Content="Apply" Margin="20 5"  VerticalAlignment="Center"/>
@@ -163,18 +139,23 @@
 
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock FontSize="15" HorizontalAlignment="Left"  
-                                               TextAlignment="Left" Width="40" Foreground="White" 
-                                               Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0\}$}" />
-                                        <Button Style="{StaticResource LikeButtonStyle}" 
+                                               TextAlignment="Left" Width="auto" Foreground="White" 
+                                               Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:F2\}$}" />
+                                        <Button  HorizontalAlignment="Right" Style="{StaticResource LikeButtonStyle}" 
                                         Command="{Binding DataContext.LikeCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                         CommandParameter="{Binding}" 
-                                        Margin="20 5"/>
-                                        <TextBlock HorizontalAlignment="Right" FontSize="15"  TextAlignment="Right"  Foreground="White" Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0\} pieces}" />
+                                        Margin="80 8"  VerticalAlignment="Center"/>
                                     </StackPanel>
+                                    <TextBlock HorizontalAlignment="Left" Margin="10 -20" FontSize="12"    Foreground="White" Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0\} pieces}" />
                                 </StackPanel>
-                                <StackPanel Margin="10" Orientation="Horizontal">
-                                    <Button FontSize="12" Content="Add to Cart" Margin="0 0 5 0" Command="{Binding ElementName=ListViewProducts,Path=DataContext.AddToCartCommand}" CommandParameter="{Binding}"/>
-                                    <Button FontSize="12" Content="Details" Command="{Binding ElementName=ListViewProducts,Path=DataContext.DetailsCommand}" CommandParameter="{Binding}"/>
+                                <StackPanel Margin="5 0" Orientation="Horizontal">
+                                    <Button FontSize="12"  Margin="0 0 5 0" Width="80" Command="{Binding ElementName=ListViewProducts,Path=DataContext.AddToCartCommand}" CommandParameter="{Binding}">
+
+                                        <materialDesign:PackIcon Kind="CartAdd"/>
+                                    </Button>
+                                    <Button HorizontalAlignment="Right" FontSize="12" Width="80"  Command="{Binding ElementName=ListViewProducts,Path=DataContext.DetailsCommand}" CommandParameter="{Binding}">
+                                        <materialDesign:PackIcon Kind="Settings"/>
+                                    </Button>
                                 </StackPanel>
                             </StackPanel>
                         </Border>

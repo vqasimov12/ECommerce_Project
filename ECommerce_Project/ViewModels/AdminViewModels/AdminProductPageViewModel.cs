@@ -15,7 +15,7 @@ public class AdminProductPageViewModel : BaseViewModel
     private ObservableCollection<Category> categories;
     private ObservableCollection<Product> products;
     private bool _addVisible = true;
-    private Category category;
+    private Category category; 
     private bool isEditting = false;
     private Account account = new Account(
       "doolsly8j",

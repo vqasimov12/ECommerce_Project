@@ -51,7 +51,7 @@ public class UserDasboardPageViewModel : BaseViewModel
         datacontext.RefreshDataSource();
         datacontext.User = User;
         _page.DataContext = datacontext;
-        
+
         CurrentPage = _page;
     }
 
@@ -82,11 +82,10 @@ public class UserDasboardPageViewModel : BaseViewModel
         //var Prod = db.ProductViews/*.Include(x => x.Product).ThenInclude(x => x.Category).*/.FirstOrDefault();
         //User.ShoppingCart.Add(Prod);
         datacontext.User = User;
-        datacontext.RefreshDataSource();    
-        datacontext.UserId = User.Id;
+        datacontext.RefreshDataSource();
         _page.DataContext = datacontext;
         CurrentPage = _page;
-     }
+    }
 
 
     #endregion
@@ -103,6 +102,12 @@ public class UserDasboardPageViewModel : BaseViewModel
             PreviouslySelectedPanel.Tag = null;
         stackPanel.Tag = "Selected";
         PreviouslySelectedPanel = stackPanel;
+        var _page = App.Container.GetInstance<UserOrderPageView>();
+        var datacontext = App.Container.GetInstance<UserOrderPageViewModel>();
+        datacontext.User = User;
+        datacontext.RefreshDataSource();
+        _page.DataContext = datacontext;
+        CurrentPage = _page;
     }
 
 
@@ -120,6 +125,12 @@ public class UserDasboardPageViewModel : BaseViewModel
             PreviouslySelectedPanel.Tag = null;
         stackPanel.Tag = "Selected";
         PreviouslySelectedPanel = stackPanel;
+        var _page = App.Container.GetInstance<UserFavouritesPageView>();
+        var datacontext = App.Container.GetInstance<UserFavouritesPageViewModel>();
+        datacontext.User = User;
+        datacontext.RefreshDataSource();
+        _page.DataContext = datacontext;
+        CurrentPage = _page;
     }
 
 
@@ -137,6 +148,13 @@ public class UserDasboardPageViewModel : BaseViewModel
             PreviouslySelectedPanel.Tag = null;
         stackPanel.Tag = "Selected";
         PreviouslySelectedPanel = stackPanel;
+
+        var _page = App.Container.GetInstance<UserProfilePageView>();
+        var datacontext = App.Container.GetInstance<UserProfilePageViewModel>();
+        datacontext.User1 = User;
+        datacontext.RefreshDataSource();
+        _page.DataContext = datacontext;
+        CurrentPage = _page;
     }
 
 

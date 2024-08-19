@@ -2,37 +2,47 @@
 using ECommerce_Project.Entity.Models;
 using ECommerce_Project.ViewModels.CommonViewModels;
 using Microsoft.EntityFrameworkCore;
-using System.Windows;
 using System.Windows.Input;
 
 namespace ECommerce_Project.ViewModels.UserViewModels;
 public class UserShoppingCartPageViewModel : BaseViewModel
 {
     private User user;
-    public int UserId { get; set; }
-    public User User { get => user; set { user = value; OnPropertyChanged(); } }
+    private List<ProductView> products = [];
+    private double? subTotal;
 
+    public double? SubTotal { get => subTotal; set { subTotal = value; OnPropertyChanged(); } }
+    public User User { get => user; set { user = value; OnPropertyChanged(); } }
+    public List<ProductView> Products { get => products; set { products = value; OnPropertyChanged(); } }
     public UserShoppingCartPageViewModel()
     {
+        RemoveCommand = new RelayCommand(RemoveCommandExecute);
         IncreaseCommand = new RelayCommand(IncreaseCommandExecute, IncreaseCommandCanExecute);
         DecreaseCommand = new RelayCommand(DecreaseCommandExecute, DecreaseCommandCanExecute);
+        PurchaseCommand = new RelayCommand(PurchaseCommandExecute, PurchaseCommandCanExecute);
     }
 
     public void RefreshDataSource()
     {
         using var db = new AppDataContext();
-        //User.ShoppingCart = new();
-        //foreach(var i in db.ProductViews)
-        //    if()
-        //User.ShoppingCart
         User = db.Users
             .Include(x => x.ShoppingCart)
-            .FirstOrDefault(x => x.Id == UserId)!;
-        MessageBox.Show(User?.ShoppingCart.Count().ToString());
+            .ThenInclude(sc => sc.Product)
+            .ThenInclude(p => p.Category)
+            .FirstOrDefault(x => x.Id == User.Id)!;
 
-
+        //var distinctProducts = User.ShoppingCart
+        //    .GroupBy(pv => pv.Product.Id)
+        //    .Select(g => new ProductView
+        //    {
+        //        Product = g.First().Product,
+        //        Count = g.Sum(pv => pv.Count),
+        //        TotalPrice = g.First().Product?.Price * g.Sum(pv => pv.Count)
+        //    })
+        //    .ToList();
+        Products = User.ShoppingCart.ToList();
+        SubTotal = Products.Sum(p => p.TotalPrice ?? 0);
     }
-
 
     #region Commands
 
@@ -40,16 +50,33 @@ public class UserShoppingCartPageViewModel : BaseViewModel
     public ICommand IncreaseCommand { get; set; }
     public bool IncreaseCommandCanExecute(object? obj)
     {
+        using var db = new AppDataContext();
+        User = db.Users
+            .Include(x => x.ShoppingCart).ThenInclude(z => z.Product)
+            .FirstOrDefault(x => x.Id == User.Id)!;
         var prod = obj as ProductView;
         if (prod is null) return false;
-        return prod.Product?.Quantity >= prod.Count;
-
+        var cartItem = User.ShoppingCart
+       .FirstOrDefault(z => z.Product.Id == prod.Product.Id);
+        if (cartItem is null) return false;
+        return cartItem.Count < cartItem.Product.Quantity;
     }
     public void IncreaseCommandExecute(object? obj)
     {
+        using var db = new AppDataContext();
+        User = db.Users
+            .Include(x => x.ShoppingCart).ThenInclude(z => z.Product)
+            .FirstOrDefault(x => x.Id == User.Id)!;
+
         var prod = obj as ProductView;
         if (prod is null) return;
-        prod.Count++;
+        var cartItem = User.ShoppingCart
+       .FirstOrDefault(z => z.Product.Id == prod.Product.Id);
+        if (cartItem is null) return;
+        cartItem.Count++;
+        db.SaveChanges();
+        RefreshDataSource();
+
     }
 
     #endregion
@@ -65,9 +92,19 @@ public class UserShoppingCartPageViewModel : BaseViewModel
     }
     public void DecreaseCommandExecute(object? obj)
     {
+        using var db = new AppDataContext();
+        User = db.Users
+            .Include(x => x.ShoppingCart).ThenInclude(z => z.Product)
+            .FirstOrDefault(x => x.Id == User.Id)!;
+
         var prod = obj as ProductView;
         if (prod is null) return;
-        prod.Count--;
+        var cartItem = User.ShoppingCart
+       .FirstOrDefault(z => z.Product.Id == prod.Product.Id);
+        if (cartItem is null) return;
+        cartItem.Count--;
+        db.SaveChanges();
+        RefreshDataSource();
     }
 
     #endregion
@@ -76,17 +113,55 @@ public class UserShoppingCartPageViewModel : BaseViewModel
     public ICommand RemoveCommand { get; set; }
     public void RemoveCommandExecute(object? obj)
     {
-        var prod = obj as ProductView;
-        if (prod is null) return;
-        using var db = new AppDataContext();
         try
         {
-            User.ShoppingCart.Remove(prod);
+            using var db = new AppDataContext();
+            User = db.Users
+                .Include(x => x.ShoppingCart).ThenInclude(z => z.Product)
+                .FirstOrDefault(x => x.Id == User.Id)!;
+
+            var prod = obj as ProductView;
+            if (prod is null) return;
+            var cartItem = User.ShoppingCart
+           .Where(z => z.Product.Id == prod.Product.Id).ToList();
+            if (cartItem.Count == 0) return;
+            foreach (var item in cartItem)
+                User.ShoppingCart.Remove(item);
             db.SaveChanges();
-        } 
+            RefreshDataSource();
+        }
         catch
         { }
     }
+    #endregion
+
+    #region PurchaseCommand
+    public ICommand PurchaseCommand { get; set; }
+    public bool PurchaseCommandCanExecute(object?obj)
+    {
+        if(SubTotal<=0) return false;
+        foreach (var cartItem in User.ShoppingCart)
+            if (cartItem.Count > cartItem.Product.Quantity)
+                return false;
+        return true;
+    }
+    public void PurchaseCommandExecute(object? obj)
+    {
+        using var db = new AppDataContext();
+        User = db.Users.Include(z => z.Orders).Include(z => z.ShoppingCart).ThenInclude(z => z.Product).FirstOrDefault(z => z.Id == User.Id)!;
+        var order = new Order { OrderDate = DateTime.Now, Products = User.ShoppingCart, TotalPrice = SubTotal, User = User, DeliveryDate = DateTime.Now.AddDays(3) };
+        User.Orders.Add(order);
+        foreach (var cartItem in User.ShoppingCart)
+        {
+            var product = db.Products.FirstOrDefault(p => p.Id == cartItem.Product.Id);
+            if (product != null && product.Quantity >= cartItem.Count)
+                product.Quantity -= cartItem.Count;
+        }
+        User.ShoppingCart = new();
+        db.SaveChanges();
+        RefreshDataSource();
+    }
+
     #endregion
 
     #endregion

@@ -1,6 +1,7 @@
 ﻿using ECommerce_Project.Command;
 using ECommerce_Project.Entity.Models;
 using ECommerce_Project.ViewModels.CommonViewModels;
+using ECommerce_Project.Views.UserViews;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -36,7 +37,8 @@ public class UserHomePageViewModel : BaseViewModel
         RefreshCommand = new RelayCommand(RefreshCommandExecute);
         ApplyFiltersCommand = new RelayCommand(ApplyFiltersCommandExecute);
         LikeCommand = new RelayCommand(LikeCommandExecute, LikeCommandCanExecite);
-        AddToCartCommand=new RelayCommand(AddToCartCommandExecute);
+        AddToCartCommand = new RelayCommand(AddToCartCommandExecute,AddToCartCommandCanExecute);
+        DetailsCommand = new RelayCommand(DetailsCommandExecute);
     }
 
     public void RefreshDataSource()
@@ -54,11 +56,7 @@ public class UserHomePageViewModel : BaseViewModel
         NameFilter = "";
     }
 
-
-
-
     #region Commands
-
 
     #region RefreshCommand
 
@@ -152,34 +150,55 @@ public class UserHomePageViewModel : BaseViewModel
     #region AddToCartCommand
 
     public ICommand AddToCartCommand { get; set; }
+    public bool AddToCartCommandCanExecute(object? obj)
+    {
+        var prod = obj as Product;
+        if (prod is null) return false;
+        using var db = new AppDataContext();
+        User = db.Users.Include(x => x.ShoppingCart).Include(z => z.FavouriteProducts).ThenInclude(z => z.Category).FirstOrDefault(x => x.Id == User.Id)!;
+        prod = db.Products.Include(x => x.Category).FirstOrDefault(x => x.Id == prod.Id);
+        if (prod.Quantity < 1) return false;
+        if (!User.ShoppingCart.Any(z => z.Product.Id == prod?.Id))
+            return true;
+        return false;
+    }
     public void AddToCartCommandExecute(object? obj)
     {
         var prod = obj as Product;
         if (prod is null) return;
         using var db = new AppDataContext();
         User = db.Users.Include(x => x.ShoppingCart).FirstOrDefault(x => x.Id == User.Id)!;
-        bool found = false;
-        foreach (var i in User.ShoppingCart)
-            if (i.Product.Id == prod.Id)
-            {
-                found = true;
-                i.Count++;
-                break;
-            }
-        if (!found)
-        {
-            prod = db.Products.Include(x => x.Category).FirstOrDefault(x => x.Id == prod.Id);
-            if (prod is null) return;
-            ProductView a = new ProductView() { Count = 1, Product = prod };
-            User.ShoppingCart.Add(a);
-            MessageBox.Show("");
-        }
+        prod = db.Products.Include(x => x.Category).FirstOrDefault(x => x.Id == prod.Id);
+        if (prod is null) return;
+        ProductView a = new ProductView() { Count = 1, Product = prod };
+        User.ShoppingCart.Add(a);
+        db.SaveChanges();
     }
 
 
     #endregion
 
+    #region DetailsCommand
+
+    public ICommand DetailsCommand { get; set; }
+    public void DetailsCommandExecute(object? obj)
+    {
+        var prod = obj as Product;
+        if (prod is null) return;
+        var window = new UserProductWindowView();
+        var datacontext = new UserProductWindowViewModel();
+        using var db = new AppDataContext();
+        prod = db.Products.Include(x => x.Category).FirstOrDefault(z => z.Id == prod.Id);
+        if (prod is null) return;
+        datacontext.Product = prod;
+        window.DataContext = datacontext;
+        window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+        window.WindowStyle = WindowStyle.None;
+        window.ShowDialog();
+    }
+
     #endregion
 
+    #endregion
 
 }

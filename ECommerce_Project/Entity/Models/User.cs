@@ -4,11 +4,11 @@ using System.Collections.ObjectModel;
 namespace ECommerce_Project.Entity.Models;
 public class User : Person
 {
-    private ObservableCollection<ProductView> orders = [];
+    private ObservableCollection<Order> orders = [];
     private ObservableCollection<Product> favouriteProducts = [];
     private ObservableCollection<ProductView> shoppingCart = [];
 
-    public ObservableCollection<ProductView> Orders { get => orders; set { orders = value; OnPropertyChanged(); } }
+    public ObservableCollection<Order> Orders { get => orders; set { orders = value; OnPropertyChanged(); } }
     public ObservableCollection<Product> FavouriteProducts { get => favouriteProducts; set { favouriteProducts = value; OnPropertyChanged(); } }
     public ObservableCollection<ProductView> ShoppingCart { get => shoppingCart; set { shoppingCart = value; OnPropertyChanged(); } }
 
