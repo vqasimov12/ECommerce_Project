@@ -37,7 +37,7 @@ public class UserHomePageViewModel : BaseViewModel
         RefreshCommand = new RelayCommand(RefreshCommandExecute);
         ApplyFiltersCommand = new RelayCommand(ApplyFiltersCommandExecute);
         LikeCommand = new RelayCommand(LikeCommandExecute, LikeCommandCanExecite);
-        AddToCartCommand = new RelayCommand(AddToCartCommandExecute,AddToCartCommandCanExecute);
+        AddToCartCommand = new RelayCommand(AddToCartCommandExecute, AddToCartCommandCanExecute);
         DetailsCommand = new RelayCommand(DetailsCommandExecute);
     }
 
@@ -96,9 +96,9 @@ public class UserHomePageViewModel : BaseViewModel
         if (maxPrice is not null)
             tempProducts = tempProducts.Where(x => x.Price <= MaxPrice).ToList();
         if (NameFilter != "")
-            tempProducts = tempProducts.Where(x => x.ProductName == NameFilter).ToList();
+            tempProducts = tempProducts.Where(x => x.ProductName.Contains(NameFilter)).ToList();
         if (descriptionFilter != "")
-            tempProducts = tempProducts.Where(x => x.ProductDescription == DescriptionFilter).ToList();
+            tempProducts = tempProducts.Where(x => x.ProductDescription.Contains(DescriptionFilter)).ToList();
         Products = new(tempProducts);
     }
 
