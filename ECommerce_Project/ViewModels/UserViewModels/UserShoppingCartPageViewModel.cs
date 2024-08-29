@@ -1,6 +1,7 @@
 ﻿using ECommerce_Project.Command;
 using ECommerce_Project.Entity.Models;
 using ECommerce_Project.ViewModels.CommonViewModels;
+using ECommerce_Project.Views.UserViews;
 using Microsoft.EntityFrameworkCore;
 using System.Windows.Input;
 
@@ -137,9 +138,9 @@ public class UserShoppingCartPageViewModel : BaseViewModel
 
     #region PurchaseCommand
     public ICommand PurchaseCommand { get; set; }
-    public bool PurchaseCommandCanExecute(object?obj)
+    public bool PurchaseCommandCanExecute(object? obj)
     {
-        if(SubTotal<=0) return false;
+        if (SubTotal <= 0) return false;
         foreach (var cartItem in User.ShoppingCart)
             if (cartItem.Count > cartItem.Product.Quantity)
                 return false;
@@ -147,19 +148,26 @@ public class UserShoppingCartPageViewModel : BaseViewModel
     }
     public void PurchaseCommandExecute(object? obj)
     {
-        using var db = new AppDataContext();
-        User = db.Users.Include(z => z.Orders).Include(z => z.ShoppingCart).ThenInclude(z => z.Product).FirstOrDefault(z => z.Id == User.Id)!;
-        var order = new Order { OrderDate = DateTime.Now, Products = User.ShoppingCart, TotalPrice = SubTotal, User = User, DeliveryDate = DateTime.Now.AddDays(3) };
-        User.Orders.Add(order);
-        foreach (var cartItem in User.ShoppingCart)
-        {
-            var product = db.Products.FirstOrDefault(p => p.Id == cartItem.Product.Id);
-            if (product != null && product.Quantity >= cartItem.Count)
-                product.Quantity -= cartItem.Count;
-        }
-        User.ShoppingCart = new();
-        db.SaveChanges();
-        RefreshDataSource();
+        //using var db = new AppDataContext();
+        //User = db.Users.Include(z => z.Orders).Include(z => z.ShoppingCart).ThenInclude(z => z.Product).FirstOrDefault(z => z.Id == User.Id)!;
+        //var order = new Order { OrderDate = DateTime.Now, Products = User.ShoppingCart, TotalPrice = SubTotal, User = User, DeliveryDate = DateTime.Now.AddDays(3) };
+        //User.Orders.Add(order);
+        //foreach (var cartItem in User.ShoppingCart)
+        //{
+        //    var product = db.Products.FirstOrDefault(p => p.Id == cartItem.Product.Id);
+        //    if (product != null && product.Quantity >= cartItem.Count)
+        //        product.Quantity -= cartItem.Count;
+        //}
+        //User.ShoppingCart = new();
+        //db.SaveChanges();
+        //RefreshDataSource();
+        var model = App.Container.GetInstance<UserDasboardPageViewModel>();
+        var datacontext = App.Container.GetInstance<UserPaymentPageViewModel>();
+        var page = App.Container.GetInstance<UserPaymentPageView>();
+        datacontext.RefreshDataSource();
+        page.DataContext = datacontext;
+        model.CurrentPage=page;
+
     }
 
     #endregion

@@ -23,35 +23,44 @@ public partial class App : Application
 
     void RegisterViews()
     {
-        Container.RegisterSingleton<LoginPageView>();
-        Container.RegisterSingleton<SignUpPageView>();
         Container.RegisterSingleton<AdminDashboardPageView>();
         Container.RegisterSingleton<AdminCategoryPageView>();
         Container.RegisterSingleton<AdminProductPageView>();
         Container.RegisterSingleton<AdminCustomersPageView>();
         Container.RegisterSingleton<AdminHomePageView>();
+        Container.RegisterSingleton<AdminOrderPageView>();
+
+        Container.RegisterSingleton<LoginPageView>();
+
+        Container.RegisterSingleton<SignUpPageView>();
         Container.RegisterSingleton<UserDashboardPageView>();
         Container.RegisterSingleton<UserHomePageView>();
         Container.RegisterSingleton<UserShoppingCartPageView>();
         Container.RegisterSingleton<UserFavouritesPageView>();
         Container.RegisterSingleton<UserOrderPageView>();
         Container.RegisterSingleton<UserProfilePageView>();
+        Container.RegisterSingleton<UserPaymentPageView>();
+        
     }
     void RegisterViewModels()
     {
-        Container.RegisterSingleton<LoginPageViewModel>();
-        Container.RegisterSingleton<SignUpPageViewModel>();
         Container.RegisterSingleton<AdminDashboardPageViewModel>();
         Container.RegisterSingleton<AdminCategoryPageViewModel>();
         Container.RegisterSingleton<AdminProductPageViewModel>();
         Container.RegisterSingleton<AdminCustomersPageViewModel>();
         Container.RegisterSingleton<AdminHomePageViewModel>();
+        Container.RegisterSingleton<AdminOrderPageViewModel>();
+
+        Container.RegisterSingleton<LoginPageViewModel>();
+
+        Container.RegisterSingleton<SignUpPageViewModel>();
         Container.RegisterSingleton<UserDasboardPageViewModel>();
         Container.RegisterSingleton<UserHomePageViewModel>();
         Container.RegisterSingleton<UserShoppingCartPageViewModel>();
         Container.RegisterSingleton<UserFavouritesPageViewModel>();
         Container.RegisterSingleton<UserOrderPageViewModel>();
         Container.RegisterSingleton<UserProfilePageViewModel>();
+        Container.RegisterSingleton<UserPaymentPageViewModel>();
     }
     protected override void OnStartup(StartupEventArgs e)
     {

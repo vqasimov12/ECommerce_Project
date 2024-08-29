@@ -126,6 +126,11 @@ public class AdminDashboardPageViewModel : BaseViewModel
             PreviouslySelectedPanel.Tag = null;
         stackPanel.Tag = "Selected";
         PreviouslySelectedPanel = stackPanel;
+        var _page = App.Container.GetInstance<AdminOrderPageView>();
+        var datacontext = App.Container.GetInstance<AdminOrderPageViewModel>();
+        datacontext.RefreshDataSource();
+        _page.DataContext = datacontext;
+        CurrentPage = _page;
     }
 
     #endregion

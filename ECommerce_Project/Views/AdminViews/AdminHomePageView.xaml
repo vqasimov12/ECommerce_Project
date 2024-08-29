@@ -37,8 +37,40 @@
             </Border>
             <!--#endregion-->
 
-            <!--#region Total Customers -->
+            <!--#region Today's Income -->
             <Border Grid.Column="1" Background="#007B7F" Padding="10" Margin="5" CornerRadius="10">
+                <StackPanel Orientation="Horizontal">
+                    <materialdesign:PackIcon Kind="CashMultiple" Width="50" Foreground="White" Height="50"/>
+                    <StackPanel Margin="8 0 0 0">
+                        <TextBlock Text="Total " FontSize="20" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Margin="20 0"  Text="Income" FontSize="20" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Margin="-50 5 0 0" Text="{Binding TotalIncome, StringFormat=C}" FontSize="25" Foreground="White" FontWeight="Bold" Width="150"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <!--#endregion-->
+
+            <!--#region Select DateTime -->
+            <Border Grid.Column="2" Background="#007B7F" Padding="10" Margin="5" CornerRadius="10">
+                <StackPanel >
+                    <StackPanel Orientation="Horizontal" Margin="8 0 0 0">
+                        <materialdesign:PackIcon Kind="DateRange" Width="50" Foreground="White" Height="50"/>
+                        <TextBlock Margin="0 15"   Text="Select Date" FontSize="20" FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+
+                        <DatePicker Height="30" Width="100" Margin=" 0 8 0 0" SelectedDate="{Binding SelectedDate}"  FontSize="30" Foreground="White" FontWeight="Bold" Style="{StaticResource MaterialDesignFilledDatePicker}"/>
+
+                        <Button Margin="15 0" Background="Transparent"   BorderBrush="Transparent" Height="40" Command="{Binding RefreshCommand}">
+                            <materialdesign:PackIcon Kind="Refresh"  FontSize="50" FontWeight="Bold" VerticalAlignment="Bottom" Margin="0 14 0 0"/>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <!--#endregion-->
+
+            <!--#region Total Customers -->
+            <Border Grid.Column="3" Background="#007B7F" Padding="10" Margin="5" CornerRadius="10">
                 <StackPanel Orientation="Horizontal">
                     <materialdesign:PackIcon Kind="AccountMultiple" Width="50" Foreground="White" Height="50"/>
                     <StackPanel Margin="8 0 0 0">
@@ -50,37 +82,11 @@
             </Border>
             <!--#endregion-->
 
-            <!--#region Today's Income -->
-            <Border Grid.Column="2" Background="#007B7F" Padding="10" Margin="5" CornerRadius="10">
-                <StackPanel Orientation="Horizontal">
-                    <materialdesign:PackIcon Kind="CashMultiple" Width="50" Foreground="White" Height="50"/>
-                    <StackPanel Margin="8 0 0 0">
-                        <TextBlock Text="Total " FontSize="20" FontWeight="Bold" Foreground="White"/>
-                        <TextBlock Margin="20 0"  Text="Income" FontSize="20" FontWeight="Bold" Foreground="White"/>
-                        <TextBlock Text="{Binding TotalIncome}" FontSize="30" Foreground="White" FontWeight="Bold"/>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
-            <!--#endregion-->
+        </Grid>
+        <Grid Grid.Row="1">
+            <Border CornerRadius="10" Background="#cfcfcf" Margin="5 10 ">
 
-            <!--#region Select DateTime -->
-            <Border Grid.Column="3" Background="#007B7F" Padding="10" Margin="5" CornerRadius="10">
-                <StackPanel >
-                    <StackPanel Orientation="Horizontal" Margin="8 0 0 0">
-                    <materialdesign:PackIcon Kind="DateRange" Width="50" Foreground="White" Height="50"/>
-                        <TextBlock Margin="0 15"   Text="Select Date" FontSize="20" FontWeight="Bold" Foreground="White"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        
-                    <DatePicker Height="30" Width="100" Margin=" 0 8 0 0" SelectedDate="{Binding SelectedDate}"  FontSize="30" Foreground="White" FontWeight="Bold" Style="{StaticResource MaterialDesignFilledDatePicker}"/>
-
-                        <Button Margin="15 0" Background="Transparent"   BorderBrush="Transparent" Height="40" Command="{Binding RefreshCommand}">
-                            <materialdesign:PackIcon Kind="Refresh"  FontSize="50" FontWeight="Bold" VerticalAlignment="Bottom" Margin="0 14 0 0"/>
-                        </Button>
-                    </StackPanel>
-                </StackPanel>
             </Border>
-            <!--#endregion-->
         </Grid>
     </Grid>
 </Page>

@@ -9,19 +9,35 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Icons\check.png" />
     <None Remove="Icons\Dislike.png" />
     <None Remove="Icons\Like.png" />
+    <None Remove="Icons\lineselect.png" />
+    <None Remove="Icons\PayPal.png" />
     <None Remove="Icons\Plus.jpg" />
+    <None Remove="Icons\visamasterdiscover.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Icons\check.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icons\Dislike.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\Like.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Icons\lineselect.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\PayPal.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icons\Plus.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\visamasterdiscover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

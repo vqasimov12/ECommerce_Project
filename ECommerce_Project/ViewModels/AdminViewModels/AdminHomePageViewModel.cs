@@ -1,7 +1,6 @@
 ﻿using ECommerce_Project.Command;
 using ECommerce_Project.Entity.Models;
 using ECommerce_Project.ViewModels.CommonViewModels;
-using System.Windows;
 using System.Windows.Input;
 
 namespace ECommerce_Project.ViewModels.AdminViewModels;
