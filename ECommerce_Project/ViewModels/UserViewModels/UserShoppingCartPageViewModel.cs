@@ -3,6 +3,8 @@ using ECommerce_Project.Entity.Models;
 using ECommerce_Project.ViewModels.CommonViewModels;
 using ECommerce_Project.Views.UserViews;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ECommerce_Project.ViewModels.UserViewModels;
@@ -143,8 +145,9 @@ public class UserShoppingCartPageViewModel : BaseViewModel
         if (CanPurchase)
         {
             using var db = new AppDataContext();
-            User = db.Users.Include(z => z.Orders).Include(z => z.ShoppingCart).ThenInclude(z => z.Product).FirstOrDefault(z => z.Id == User.Id)!;
-            var order = new Order { OrderDate = DateTime.Now, Products = User.ShoppingCart, TotalPrice = SubTotal, User = User };
+            User = db.Users.Include(z => z.Orders).Include(z => z.ShoppingCart).ThenInclude(z => z.Product).ThenInclude(z=>z.Category).FirstOrDefault(z => z.Id == User.Id)!;
+
+            var order = new Order { OrderDate = DateTime.Now, Products = User.ShoppingCart, TotalPrice = SubTotal, User = User, DeliveryDate = DateTime.Now.AddDays(3) };
             User.Orders.Add(order);
             foreach (var cartItem in User.ShoppingCart)
             {
@@ -152,16 +155,30 @@ public class UserShoppingCartPageViewModel : BaseViewModel
                 if (product != null && product.Quantity >= cartItem.Count)
                     product.Quantity -= cartItem.Count;
             }
+
+            {
+                var window = new RateProductWindowView();
+                var context = new RateProductWindowViewModel();
+                context.Products = User.ShoppingCart;
+                window.DataContext = context;
+
+                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.Show();
+            }
+
             User.ShoppingCart = new();
             db.SaveChanges();
             RefreshDataSource();
         }
-        var model = App.Container.GetInstance<UserDasboardPageViewModel>();
-        var datacontext = App.Container.GetInstance<UserPaymentPageViewModel>();
-        var page = App.Container.GetInstance<UserPaymentPageView>();
-        datacontext.RefreshDataSource();
-        page.DataContext = datacontext;
-        model.CurrentPage = page;
+        else
+        {
+            var model = App.Container.GetInstance<UserDasboardPageViewModel>();
+            var datacontext = App.Container.GetInstance<UserPaymentPageViewModel>();
+            var page = App.Container.GetInstance<UserPaymentPageView>();
+            datacontext.RefreshDataSource();
+            page.DataContext = datacontext;
+            model.CurrentPage = page;
+        }
     }
 
     #endregion

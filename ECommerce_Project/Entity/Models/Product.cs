@@ -11,18 +11,22 @@ public class Product : NotifyPropertyChangedService
     private Category category;
     private int categoryId;
     private string image;
-    private int? count;
     private string? likeImage;
+    private int rateCount;
+    private double rating;
+    private double ratingView;
 
     public Product()
     {
         Image = @"https://res.cloudinary.com/doolsly8j/image/upload/v1723490972/ggfwvpxhtxevqpumkk5i.png";
-        Count = 0;
+        RateCount = 0;
         LikeImage = @"/Icons/Dislike.png";
+        Rating = 0;
+        RatingView = 0;
     }
+
     public int Id { get => id; set { id = value; OnPropertyChanged(); } }
     public string? ProductDescription { get => productDescription; set { productDescription = value; OnPropertyChanged(); } }
-    public int? Count { get => count; set { count = value; OnPropertyChanged(); } }
     public int CategoryId { get => categoryId; set { categoryId = value; OnPropertyChanged(); } }
     public string Image { get => image; set { image = value; OnPropertyChanged(); } }
     public string? ProductName { get => productName; set { productName = value; OnPropertyChanged(); } }
@@ -30,6 +34,12 @@ public class Product : NotifyPropertyChangedService
     public Category Category { get => category; set { category = value; OnPropertyChanged(); } }
     public int? Quantity { get => quantity; set { quantity = value; OnPropertyChanged(); } }
     public string? LikeImage { get => likeImage; set { likeImage = value; OnPropertyChanged(); } }
+   
+    //rating
+    public double RatingView { get => ratingView; set { ratingView = value; OnPropertyChanged(); } }
+    public double Rating { get => rating; set { rating = value; OnPropertyChanged(); RatingView = Rating / RateCount; } }
+    public int RateCount { get => rateCount; set { rateCount = value; OnPropertyChanged(); RatingView = Rating / RateCount; } }
+    
     public void SetProduct(Product other)
     {
         ProductName = other.ProductName;

@@ -7,6 +7,7 @@ using ECommerce_Project.Views.UserViews;
 using ECommerce_Project.Views.AdminViews;
 using ECommerce_Project.ViewModels.AdminViewModels;
 using ECommerce_Project.ViewModels.UserViewModels;
+using Syncfusion.Licensing;
 
 namespace ECommerce_Project;
 public partial class App : Application
@@ -14,7 +15,7 @@ public partial class App : Application
     public static Container Container { get; private set; } = new();
     public App()
     {
-
+        SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NCaF1cWWhAYVF+WmFZfVpgdVRMYlVbQH5PIiBoS35RckVrW3Zcc3BWQ2NVVkN1");
         Container.RegisterSingleton<MainWindow>();
         Container.RegisterSingleton<AppDataContext>();
         RegisterViews();
@@ -40,7 +41,7 @@ public partial class App : Application
         Container.RegisterSingleton<UserOrderPageView>();
         Container.RegisterSingleton<UserProfilePageView>();
         Container.RegisterSingleton<UserPaymentPageView>();
-        
+
     }
     void RegisterViewModels()
     {
@@ -65,7 +66,7 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         var view = Container.GetInstance<MainWindow>();
-        var page=Container.GetInstance<LoginPageView>();
+        var page = Container.GetInstance<LoginPageView>();
         page.DataContext = Container.GetInstance<LoginPageViewModel>();
         view.Navigate(page);
         view.ShowDialog();

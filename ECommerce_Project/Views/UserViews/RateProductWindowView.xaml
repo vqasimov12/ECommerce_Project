@@ -1,0 +1,49 @@
+﻿<Window x:Class="ECommerce_Project.Views.UserViews.RateProductWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ECommerce_Project.Views.UserViews" xmlns:syncfusion="http://schemas.syncfusion.com/wpf" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        mc:Ignorable="d"
+        Title="" Height="450" Name="page" Width="800" ResizeMode="NoResize" >
+
+    <StackPanel>
+        
+    <ScrollViewer MinHeight="330" VerticalScrollBarVisibility="Auto">
+        <ListView x:Name="List" ScrollViewer.HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding Products}" Background="Transparent" BorderThickness="0">
+            <ListView.View>
+                <GridView>
+                    <!-- Product Image Column -->
+                    <GridViewColumn Header="Image" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border Width="60" Height="60" CornerRadius="30" VerticalAlignment="Center">
+                                    <Image Source="{Binding Product.Image}" Stretch="Uniform"/>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+
+                    </GridViewColumn>
+
+
+                    <GridViewColumn Header="Id" Width="60" DisplayMemberBinding="{Binding Product.Id}"/>
+                    <GridViewColumn Header="Product Name" Width="140" DisplayMemberBinding="{Binding Product.ProductName}"/>
+                    <GridViewColumn Header="Category" Width="140" DisplayMemberBinding="{Binding Product.Category.Name}"/>
+
+                    <!-- Rate Button Column -->
+                    <GridViewColumn Header="Rate" Width="160">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <syncfusion:SfRating ItemsCount="5" Precision="Exact" Width="150"
+                      Value="{Binding Product.Rating,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </ScrollViewer>
+
+        <Button VerticalAlignment="Bottom" Margin="20" Width="160" Height="50" Content="Commit" FontSize="20" FontFamily="Times New Roman" FontWeight="Bold" Command="{Binding CommitCommand}" CommandParameter="{Binding ElementName=page}"/>
+    </StackPanel>
+</Window>
