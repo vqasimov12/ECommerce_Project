@@ -12,6 +12,7 @@ public class UserShoppingCartPageViewModel : BaseViewModel
     private List<ProductView> products = [];
     private double? subTotal;
 
+    public bool CanPurchase = false;
     public double? SubTotal { get => subTotal; set { subTotal = value; OnPropertyChanged(); } }
     public User User { get => user; set { user = value; OnPropertyChanged(); } }
     public List<ProductView> Products { get => products; set { products = value; OnPropertyChanged(); } }
@@ -31,18 +32,9 @@ public class UserShoppingCartPageViewModel : BaseViewModel
             .ThenInclude(sc => sc.Product)
             .ThenInclude(p => p.Category)
             .FirstOrDefault(x => x.Id == User.Id)!;
-
-        //var distinctProducts = User.ShoppingCart
-        //    .GroupBy(pv => pv.Product.Id)
-        //    .Select(g => new ProductView
-        //    {
-        //        Product = g.First().Product,
-        //        Count = g.Sum(pv => pv.Count),
-        //        TotalPrice = g.First().Product?.Price * g.Sum(pv => pv.Count)
-        //    })
-        //    .ToList();
         Products = User.ShoppingCart.ToList();
         SubTotal = Products.Sum(p => p.TotalPrice ?? 0);
+        CanPurchase = false;
     }
 
     #region Commands
@@ -148,26 +140,28 @@ public class UserShoppingCartPageViewModel : BaseViewModel
     }
     public void PurchaseCommandExecute(object? obj)
     {
-        //using var db = new AppDataContext();
-        //User = db.Users.Include(z => z.Orders).Include(z => z.ShoppingCart).ThenInclude(z => z.Product).FirstOrDefault(z => z.Id == User.Id)!;
-        //var order = new Order { OrderDate = DateTime.Now, Products = User.ShoppingCart, TotalPrice = SubTotal, User = User, DeliveryDate = DateTime.Now.AddDays(3) };
-        //User.Orders.Add(order);
-        //foreach (var cartItem in User.ShoppingCart)
-        //{
-        //    var product = db.Products.FirstOrDefault(p => p.Id == cartItem.Product.Id);
-        //    if (product != null && product.Quantity >= cartItem.Count)
-        //        product.Quantity -= cartItem.Count;
-        //}
-        //User.ShoppingCart = new();
-        //db.SaveChanges();
-        //RefreshDataSource();
+        if (CanPurchase)
+        {
+            using var db = new AppDataContext();
+            User = db.Users.Include(z => z.Orders).Include(z => z.ShoppingCart).ThenInclude(z => z.Product).FirstOrDefault(z => z.Id == User.Id)!;
+            var order = new Order { OrderDate = DateTime.Now, Products = User.ShoppingCart, TotalPrice = SubTotal, User = User };
+            User.Orders.Add(order);
+            foreach (var cartItem in User.ShoppingCart)
+            {
+                var product = db.Products.FirstOrDefault(p => p.Id == cartItem.Product.Id);
+                if (product != null && product.Quantity >= cartItem.Count)
+                    product.Quantity -= cartItem.Count;
+            }
+            User.ShoppingCart = new();
+            db.SaveChanges();
+            RefreshDataSource();
+        }
         var model = App.Container.GetInstance<UserDasboardPageViewModel>();
         var datacontext = App.Container.GetInstance<UserPaymentPageViewModel>();
         var page = App.Container.GetInstance<UserPaymentPageView>();
         datacontext.RefreshDataSource();
         page.DataContext = datacontext;
-        model.CurrentPage=page;
-
+        model.CurrentPage = page;
     }
 
     #endregion

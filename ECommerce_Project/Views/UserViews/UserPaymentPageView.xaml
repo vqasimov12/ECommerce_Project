@@ -5,17 +5,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ECommerce_Project.Views.UserViews" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="UserPaymentPageView">
+      d:DesignHeight="700" d:DesignWidth="1000"
+      Title="UserPaymentPageView" Background="White">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Page.Resources>
 
-    <Grid Grid.Row="1" Margin="0 0 20 0">
+    <Grid Grid.Row="1" Margin="0 0 20 0"  >
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="20 10 ">
             <Grid.ColumnDefinitions>
@@ -43,17 +43,25 @@
 
 
         <!--#region Panel1 -->
-        <Grid  Visibility="{Binding FirstPanelVisiblity, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="1" Margin="0 0 20 0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Border Grid.Row="0"  Background="White" CornerRadius="10">
+        <Grid  Background="White" Visibility="{Binding FirstPanelVisiblity, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="1" Margin="0 0 20 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Background="White" Panel.ZIndex="1" Margin="2 0 0 0 ">
+                <RadioButton DockPanel.Dock="Left" Margin="10 100 0 50"  IsChecked="{Binding DeliveryChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <RadioButton Margin="10 10 0 50" IsChecked="{Binding CardChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left"/>
+
+                <RadioButton Margin="10 10 0 0" IsChecked="{Binding PaypalCkecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left"  />
+
+            </StackPanel>
+            <Border Grid.Row="0" Grid.Column="1" BorderThickness="0" Background="White" >
                 <StackPanel >
+
                     <TextBlock Text="Payment Methods" Margin="20 25 0 10" FontSize="30" FontWeight="Bold" FontFamily="Poppins"/>
 
                     <DockPanel Margin="20 10 0 20">
-                        <RadioButton x:Name="codpaymentbtn" GroupName="delivery" DockPanel.Dock="Left" IsChecked="{Binding DeliveryChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <StackPanel Orientation="Vertical" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0 10 0 0">
                             <TextBlock Text="Pay on Delivery" Margin="10 0 0 5" VerticalAlignment="Center" FontSize="15" FontWeight="Regular" FontFamily="Poppins"/>
                             <TextBlock Text="Pay with cash on delivery" Margin="10 0 0 10" VerticalAlignment="Center" FontSize="12" FontWeight="Regular" FontFamily="Poppins"/>
@@ -61,9 +69,7 @@
                     </DockPanel>
 
                     <DockPanel Margin="20 0 0 20">
-
                         <Image Width="200" Height="auto" DockPanel.Dock="Right" Margin="0 0 20 0" Source="/Icons/visamasterdiscover.png" />
-                        <RadioButton x:Name="creditVisardbtn" GroupName="delivery" IsChecked="{Binding CardChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left"/>
                         <StackPanel Orientation="Vertical" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0 10 0 0">
                             <TextBlock Text="Credit/Debit Cards" Margin="10 0 0 5" VerticalAlignment="Center" FontSize="15" FontWeight="Regular" FontFamily="Poppins"/>
                             <TextBlock Text="Pay with your VISA, Master or Maestro Card" Margin="10 0 0 10" VerticalAlignment="Center" FontSize="12" FontWeight="Regular" FontFamily="Poppins"/>
@@ -74,7 +80,6 @@
                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Margin="0 0 147 0" >
                             <Image Width="60" Height="auto"  Source="/Icons/PayPal.png" />
                         </StackPanel>
-                        <RadioButton x:Name="creditAmericanrdbtn" GroupName="delivery" IsChecked="{Binding PaypalCkecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left"  />
                         <StackPanel Orientation="Vertical" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0 10 0 0">
                             <TextBlock Text="PayPal" Margin="10 0 0 5" VerticalAlignment="Center" FontSize="15" FontWeight="Regular" FontFamily="Poppins"/>
                             <TextBlock Text="Pay with your PayPal" Margin="10 0 0 10" VerticalAlignment="Center" FontSize="12" FontWeight="Regular" FontFamily="Poppins"/>
@@ -84,19 +89,17 @@
                 </StackPanel>
             </Border>
         </Grid>
+
         <!--#endregion-->
 
         <!--#region Panel2 -->
-        <!--<Border  Visibility="{Binding SecondPanelVisiblity, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="1" Background="White" CornerRadius="10">
+        <Border  Visibility="{Binding SecondPanelVisiblity, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="1" Background="White" CornerRadius="10">
             <StackPanel >
                 <TextBlock Text="Payment Methods" Margin="20 25 0 10" FontSize="30" FontWeight="Bold" FontFamily="Poppins"/>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 10">
 
 
-                    -->
-        <!--Cash on Delivery-->
-        <!--
 
                     <RadioButton Margin="-20 0 0 0" IsChecked="{Binding DeliveryChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                VerticalAlignment="Center"/>
@@ -106,9 +109,6 @@
                     </StackPanel>
 
 
-                    -->
-        <!--Credit/Debit Cards-->
-        <!--
 
                     <RadioButton IsChecked="{Binding CardChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                VerticalAlignment="Center"/>
@@ -118,9 +118,8 @@
                     </StackPanel>
 
 
-                    -->
-        <!--PayPal-->
-        <!--
+
+
 
                     <RadioButton IsChecked="{Binding PaypalCkecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                VerticalAlignment="Center"/>
@@ -130,71 +129,44 @@
                     </StackPanel>
                 </StackPanel>
 
-
-                -->
-        <!--#region Credit Card Details (Shown when Credit Card is selected)-->
-        <!--
-                <StackPanel x:Name="creditcardFill" Orientation="Vertical" Visibility="Collapsed">
-                    <StackPanel Orientation="Vertical" Margin="48 -10 48 10">
-                        <Border Background="#F9F9F9" BorderBrush="#FFE8DDDD" BorderThickness="2" CornerRadius="5" Margin="0 0 0 10">
-                            <DockPanel>
-                                <TextBox x:Name="nameOfOwntb" Text="{Binding cardName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                   Height="35" materialDesign:TextFieldAssist.DecorationVisibility="Hidden"  
-                                   materialDesign:HintAssist.Hint="Owner name" Margin="10" FontSize="14" BorderThickness="0" />
-                            </DockPanel>
-                        </Border>
-                        <Border Background="#F9F9F9" BorderBrush="#FFE8DDDD" BorderThickness="2" CornerRadius="5">
-                            <DockPanel>
-                                <Button Width="70" Height="49" IsEnabled="False" Background="Transparent" BorderThickness="0">
-                                    <materialDesign:PackIcon Kind="CreditCard" Foreground="Black" Width="30" Height="30" VerticalAlignment="Center"/>
-                                </Button>
-                                <TextBox x:Name="cardNumbertb" Text="{Binding cardNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                   materialDesign:TextFieldAssist.DecorationVisibility="Hidden" 
-                                   materialDesign:HintAssist.Hint="Card number(16 numbers)" Margin="10" FontSize="14" BorderThickness="0" />
-                            </DockPanel>
+                <StackPanel Margin="0 50">
+                    <StackPanel Width="400" Orientation="Horizontal" HorizontalAlignment="Center" >
+                        <materialDesign:PackIcon Height="40" Width="50" Kind="CreditCard" Foreground="LightGray"/>
+                        <Border Background="#ffffff" Margin="20 0 0 0" BorderBrush="#FFE8DDDD" BorderThickness="2" CornerRadius="5">
+                            <TextBox Background="#F9F9F9" materialDesign:HintAssist.Hint="Card Number" Foreground="Black" Width="310" Height="40" Padding="2 0 0 0" Text="{Binding CardNumber,UpdateSourceTrigger=PropertyChanged}" FontSize="20" />
                         </Border>
                     </StackPanel>
-                    <DockPanel Margin="48 0 30 10">
-                        <StackPanel Orientation="Vertical">
-                            <Border Background="#F9F9F9" BorderBrush="#FFE8DDDD" BorderThickness="2" CornerRadius="5" Width="286" Height="49">
-                                <DatePicker x:Name="expCreditCarddate" SelectedDate="{Binding cardExp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                      materialDesign:HintAssist.Hint="MM/DD/YY" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
-                                      Margin="20 0 20 0" VerticalContentAlignment="Center"/>
-                            </Border>
-                        </StackPanel>
-                        <StackPanel Orientation="Vertical" Margin="10 0 18 0">
-                            <Border Background="#F9F9F9" BorderBrush="#FFE8DDDD" BorderThickness="2" CornerRadius="5" Height="49">
-                                <DockPanel>
-                                    <Button Width="70" Height="49" IsEnabled="False" Background="Transparent" BorderThickness="0">
-                                        <materialDesign:PackIcon Kind="Lock" Foreground="Black" Width="30" Height="30" VerticalAlignment="Center"/>
-                                    </Button>
-                                    <TextBox x:Name="cvctb" Text="{Binding cardCSV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                       materialDesign:TextFieldAssist.DecorationVisibility="Hidden" 
-                                       materialDesign:HintAssist.Hint="CVV(3 numbers)" Margin="10" FontSize="14" BorderThickness="0"/>
-                                </DockPanel>
-                            </Border>
-                        </StackPanel>
-                    </DockPanel>
+
+                    <StackPanel Width="400" Margin="19 40 0 0" Orientation="Horizontal" HorizontalAlignment="Center" >
+                        <materialDesign:PackIcon Kind="DateRange" Height="40" Width="50" Margin="-10 5 0 0 " Foreground="LightGray"/>
+                        <Border Background="#F9F9F9" Margin="20 0 0 0" BorderBrush="#FFE8DDDD" BorderThickness="2" CornerRadius="5" Width="200" Height="49">
+                            <TextBox Background="#F9F9F9" materialDesign:HintAssist.Hint="MM/YY" Foreground="Black"  Height="40" Text="{Binding ExpDate, UpdateSourceTrigger=PropertyChanged}" Margin="2" FontSize="20" />
+
+                        </Border>
+
+                        <Border Background="#ffffff"  Margin="51 0" BorderBrush="#FFE8DDDD" BorderThickness="2" CornerRadius="5" >
+                            <TextBox Background="#F9F9F9" materialDesign:HintAssist.Hint="CVV" Foreground="Black" Width="60" Height="40" Text="{Binding CvvCode, UpdateSourceTrigger=PropertyChanged}" FontSize="20" />
+                        </Border>
+
+                    </StackPanel>
                 </StackPanel>
-                -->
-        <!--#endregion-->
-        <!--
+
 
             </StackPanel>
 
-        </Border>-->
+        </Border>
 
         <!--#endregion-->
 
         <!--Continue and Back Buttons-->
-        <DockPanel Grid.Row="2"  >
-            <Border DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Top" Width="200"  Margin="-60 10 60 0" CornerRadius="10" Background="Red" BorderThickness="2" >
-                <Button x:Name="continuebtn" Height="30" Content="Continue" Background="Transparent" BorderThickness="0" FontSize="20" FontFamily="Poppins" FontWeight="SemiBold" Command="{Binding FinishOrderCommand}"  CommandParameter="{Binding ElementName=PaymentOptionsUC}"></Button>
-            </Border>
-            <Border x:Name="borderbackbtn"  DockPanel.Dock="Left"  VerticalAlignment="Top" Width="200"  Margin="-230 10 0 0" CornerRadius="10" BorderBrush="#A2A6B0" Background="Transparent" BorderThickness="2" >
-                <Button x:Name="backbtn" Height="30" Content="Back" Background="Transparent" BorderThickness="0" FontSize="20" FontFamily="Poppins" FontWeight="SemiBold" Foreground="#A2A6B0" Command="{Binding BackToDeliveryDetailCommand}"  CommandParameter="{Binding ElementName=PaymentOptionsUC}"></Button>
-            </Border>
-        </DockPanel>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" Margin="0 25 " Orientation="Horizontal">
+            <Button Style="{StaticResource MaterialDesignRaisedButton}" Height="40" Width="120" Content="Back" Background="#060405" BorderThickness="0" FontSize="20" FontFamily="Poppins" FontWeight="SemiBold" Foreground="#A2A6B0" Command="{Binding BackCommand}"  CommandParameter="{Binding ElementName=PaymentOptionsUC}" Margin="80 0"/>
+
+            <Button  Height="40" Width="120" Margin="80 0" Background="red" BorderThickness="0" FontSize="20" FontFamily="Poppins" FontWeight="SemiBold" Style="{DynamicResource MaterialDesignRaisedAccentButton}" Command="{Binding ConfirmCommand}"  CommandParameter="{Binding ElementName=PaymentOptionsUC}" Foreground="White" Content="Confirm"/>
+
+
+
+        </StackPanel>
     </Grid>
 
 </Page>
