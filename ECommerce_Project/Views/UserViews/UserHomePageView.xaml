@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ECommerce_Project.Views.UserViews"  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:ECommerce_Project.Views.UserViews"  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UserHomePageView" Background="#060405">
@@ -52,12 +52,11 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
         <TextBlock Text="Products"
                    Foreground="White"
-                   FontSize="30"
+                   FontSize="30" FontWeight="Bold"
                    HorizontalAlignment="Left"
-                   Margin="5 10"/>
+                   Margin="10"/>
         <StackPanel Grid.Row="1">
 
             <StackPanel Orientation="Horizontal"  Margin="5">
@@ -68,7 +67,7 @@
                 <TextBox Width="200" Margin="20 5" VerticalAlignment="Center" FontSize="16"
                  Text="{Binding DescriptionFilter, UpdateSourceTrigger=PropertyChanged}" Foreground="White"
                  materialDesign:HintAssist.Hint="Search by Description" />
-
+                <syncfusion:SfRating ItemsCount="5" Precision="Exact" Width="150" Value="{Binding RatingFilter, Mode=TwoWay}" ItemSize="14" ToolTip="Min Rating" IsHitTestVisible="True" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"  Margin="5">
 
@@ -116,8 +115,8 @@
                         <Border HorizontalAlignment="Center"
                             CornerRadius="10"
                             BorderThickness="1" BorderBrush="DarkOrange"
-                            Width="200"
-                            Height="300"
+                            Width="220"
+                            Height="320"
                             Padding="5"
                             Background="#060405">
                             <StackPanel Orientation="Vertical">
@@ -135,21 +134,25 @@
                                     <TextBlock FontSize="16" FontWeight="DemiBold" HorizontalAlignment="Center" 
                                            Foreground="White" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" />
                                     <TextBlock HorizontalAlignment="Center" Foreground="White" 
-                                           Text="{Binding ProductDescription, UpdateSourceTrigger=PropertyChanged}" />
+                                           Text="{Binding Category.Name, UpdateSourceTrigger=PropertyChanged}" FontStyle="Italic"/>
+                                    <syncfusion:SfRating Margin="40 5 0 5" ItemsCount="5" Precision="Exact"
+                                                         
+VerticalAlignment="Center" ItemSize="12" Width="100" IsReadOnly="True" Value="{Binding RatingView}"/>
 
                                     <StackPanel Orientation="Horizontal">
+
                                         <TextBlock FontSize="15" HorizontalAlignment="Left"  
-                                               TextAlignment="Left" Width="auto" Foreground="White" 
+                                               TextAlignment="Left" Width="85" Foreground="White" 
                                                Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:F2\}$}" />
                                         <Button  HorizontalAlignment="Right" Style="{StaticResource LikeButtonStyle}" 
                                         Command="{Binding DataContext.LikeCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                         CommandParameter="{Binding}" 
                                         Margin="80 8"  VerticalAlignment="Center"/>
                                     </StackPanel>
-                                    <TextBlock HorizontalAlignment="Left" Margin="10 -20" FontSize="12"    Foreground="White" Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0\} pieces}" />
+                                    <TextBlock HorizontalAlignment="Left" Margin="2 -20" FontSize="12" Width="150"   Foreground="White" Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0\} pieces}" />
                                 </StackPanel>
-                                <StackPanel Margin="5 0" Orientation="Horizontal">
-                                    <Button FontSize="12"  Margin="0 0 5 0" Width="80" Command="{Binding ElementName=ListViewProducts,Path=DataContext.AddToCartCommand}" CommandParameter="{Binding}">
+                                <StackPanel HorizontalAlignment="Center" Margin="5 0" Orientation="Horizontal">
+                                    <Button FontSize="12"  Margin="0 0 15 0" Width="80" Command="{Binding ElementName=ListViewProducts,Path=DataContext.AddToCartCommand}" CommandParameter="{Binding}">
 
                                         <materialDesign:PackIcon Kind="CartAdd"/>
                                     </Button>

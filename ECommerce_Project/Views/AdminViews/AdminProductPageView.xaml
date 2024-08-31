@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ECommerce_Project.Views.AdminViews"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AdminProductPageView">
@@ -134,9 +134,32 @@
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="Product Name" DisplayMemberBinding="{Binding ProductName}" Width="117"/>
+                                <GridViewColumn Header="Rating">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <syncfusion:SfRating ItemsCount="5" Precision="Exact" Width="100"
+           Value="{Binding RatingView, Mode=TwoWay}" IsReadOnly="True" ItemSize="12" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                                 <GridViewColumn Header="Product Description" DisplayMemberBinding="{Binding ProductDescription}" Width="148"/>
-                                <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" Width="60"/>
-                                <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding Quantity}" Width="82"/>
+
+                                <GridViewColumn Header="Price">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Price}" Margin="5 0 0 0"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
+                                <GridViewColumn Header="Quantity">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Quantity}" Margin="10 0 0 0"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
                                 <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}"/>
                             </GridView>
                         </ListView.View>

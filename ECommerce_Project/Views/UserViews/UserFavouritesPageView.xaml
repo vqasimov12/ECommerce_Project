@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ECommerce_Project.Views.UserViews" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:ECommerce_Project.Views.UserViews" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UserFavouritesPageView" Background="#f4f4f4">
@@ -25,12 +25,32 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Product Name" DisplayMemberBinding="{Binding ProductName}" Width="117"/>
-                        <GridViewColumn Header="Product Description" DisplayMemberBinding="{Binding ProductDescription}" Width="148"/>
+                         
+                        <GridViewColumn Header="Product Details">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding ProductName}" FontWeight="Bold" FontSize="15" Foreground="#333"/>
+                                        <TextBlock Text="{Binding Category.Name}" FontStyle="Italic" Foreground="Gray" FontSize="14"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
+                        <GridViewColumn Header="Description" DisplayMemberBinding="{Binding ProductDescription}" Width="140"/>
+                        
+                        <GridViewColumn Header="Rating" Width="auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <syncfusion:SfRating ItemsCount="5" Precision="Exact" VerticalAlignment="Center" Width="90"
+Value="{Binding RatingView, Mode=TwoWay}" IsReadOnly="True" ItemSize="14" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        
+                        </GridViewColumn>
+                        
                         <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:F2\}$}" Width="92"/>
-                        <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}"/>
-                        <GridViewColumn Header="     " Width="80">
+                        <GridViewColumn  Width="60">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Command="{Binding ElementName=list,Path= DataContext.LikeCommand}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Padding="0" Width="30" Height="30">

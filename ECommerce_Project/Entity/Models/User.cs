@@ -14,7 +14,7 @@ public class User : Person
 
     public User()
     {
-        Image = @"https://res.cloudinary.com/doolsly8j/image/upload/v1723499492/n6xzqkrauos2nb0pvlpr.jpg";
+        Image = @"https://res.cloudinary.com/doolsly8j/image/upload/v1723609855/i7th7hb5gytgbzprubqv.jpg";
     }
 
     public void SetUser(User _user)

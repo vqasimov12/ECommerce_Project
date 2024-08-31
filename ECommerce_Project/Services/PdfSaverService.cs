@@ -14,7 +14,7 @@ public class PdfSaverService
         XGraphics Xgraph = XGraphics.FromPdfPage(page);
         XFont titleFont = new XFont("Verdana", 20, XFontStyle.Bold);
         XFont headerFont = new XFont("Verdana", 16, XFontStyle.Bold);
-        XFont bodyFont = new XFont("Verdana", 12, XFontStyle.Regular);
+        XFont bodyFont = new XFont("Times New Roman", 12, XFontStyle.Regular);
 
         int yPosition = 50;
 
@@ -29,28 +29,30 @@ public class PdfSaverService
         yPosition += 40;
 
         Xgraph.DrawString($"Total Price: ", bodyFont, XBrushes.Black, new XPoint(50, yPosition));
-        Xgraph.DrawString($"{selectedOrder.TotalPrice:C}", bodyFont, XBrushes.Black, new XPoint(150, yPosition));
+        Xgraph.DrawString($"{selectedOrder.TotalPrice:C}", bodyFont, XBrushes.Black, new XPoint(130, yPosition));
         yPosition += 20;
         Xgraph.DrawString($"Order Date: ", bodyFont, XBrushes.Black, new XPoint(50, yPosition));
-        Xgraph.DrawString($"{selectedOrder.OrderDate:dd/MM/yyyy}", bodyFont, XBrushes.Black, new XPoint(150, yPosition));
+        Xgraph.DrawString($"{selectedOrder.OrderDate:dd/MM/yyyy}", bodyFont, XBrushes.Black, new XPoint(130, yPosition));
         yPosition += 20;
         Xgraph.DrawString($"Delivery Date:", bodyFont, XBrushes.Black, new XPoint(50, yPosition));
-        Xgraph.DrawString($" {selectedOrder.DeliveryDate:dd/MM/yyyy}", bodyFont, XBrushes.Black, new XPoint(147, yPosition));
+        Xgraph.DrawString($" {selectedOrder.DeliveryDate:dd/MM/yyyy}", bodyFont, XBrushes.Black, new XPoint(127, yPosition));
         yPosition += 40;
 
         // Products List
         Xgraph.DrawString("Products:", headerFont, XBrushes.Black, new XPoint(50, yPosition));
         yPosition += 30;
         int i = 1;
+
         foreach (var productView in selectedOrder.Products)
         {
-            Xgraph.DrawString($"{i}.Product Name: {productView.Product.ProductName}", bodyFont, XBrushes.Black, new XPoint(50, yPosition));
+            string s = (i < 10 ? "  " : " ");
+            Xgraph.DrawString($"{i}.{s}Product Name:  {productView.Product.ProductName}", bodyFont, XBrushes.Black, new XPoint(50, yPosition));
             yPosition += 20;
-            Xgraph.DrawString($"Category: {productView.Product.Category.Name}", bodyFont, XBrushes.Black, new XPoint(60, yPosition));
+            Xgraph.DrawString($"  Category:          {productView.Product.Category.Name}", bodyFont, XBrushes.Black, new XPoint(60, yPosition));
             yPosition += 20;
-            Xgraph.DrawString($"Quantity: {productView.Count}", bodyFont, XBrushes.Black, new XPoint(60, yPosition));
+            Xgraph.DrawString($"  Quantity:           {productView.Count}", bodyFont, XBrushes.Black, new XPoint(60, yPosition));
             yPosition += 20;
-            Xgraph.DrawString($"Price: {productView.Product.Price:C}", bodyFont, XBrushes.Black, new XPoint(60, yPosition));
+            Xgraph.DrawString($"  Price:                 {productView.Product.Price:C}", bodyFont, XBrushes.Black, new XPoint(60, yPosition));
             yPosition += 30;
             i++;
         }
@@ -58,7 +60,6 @@ public class PdfSaverService
         string fileName = $"Order_{selectedOrder.Id}.pdf";
         string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), fileName);
         document.Save(filePath);
-
         Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
     }
 

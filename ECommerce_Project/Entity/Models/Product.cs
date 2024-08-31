@@ -18,7 +18,7 @@ public class Product : NotifyPropertyChangedService
 
     public Product()
     {
-        Image = @"https://res.cloudinary.com/doolsly8j/image/upload/v1723490972/ggfwvpxhtxevqpumkk5i.png";
+        Image = @"https://res.cloudinary.com/doolsly8j/image/upload/v1724926263/nm2zhsf8uqfwdwjehkex.png";
         RateCount = 0;
         LikeImage = @"/Icons/Dislike.png";
         Rating = 0;

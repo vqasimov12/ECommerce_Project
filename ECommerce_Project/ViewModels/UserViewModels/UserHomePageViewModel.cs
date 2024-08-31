@@ -19,11 +19,12 @@ public class UserHomePageViewModel : BaseViewModel
     private double? minPrice;
     private double? maxPrice;
     private User user;
+    private double ratingFilter;
 
     public User User { get => user; set { user = value; OnPropertyChanged(); } }
     public double? MaxPrice { get => maxPrice; set { maxPrice = value; OnPropertyChanged(); } }
     public double? MinPrice { get => minPrice; set { minPrice = value; OnPropertyChanged(); } }
-
+    public double RatingFilter { get => ratingFilter; set { ratingFilter = value; OnPropertyChanged(); } }
     public string? DescriptionFilter { get => descriptionFilter; set { descriptionFilter = value; OnPropertyChanged(); } }
     public string? NameFilter { get => nameFilter; set { nameFilter = value; OnPropertyChanged(); } }
     public Category? CategoryFilter { get => categoryFilter; set { categoryFilter = value; OnPropertyChanged(); } }
@@ -54,6 +55,7 @@ public class UserHomePageViewModel : BaseViewModel
         MinPrice = null;
         DescriptionFilter = "";
         NameFilter = "";
+        RatingFilter = 0;
     }
 
     #region Commands
@@ -80,7 +82,7 @@ public class UserHomePageViewModel : BaseViewModel
             MaxPrice = null;
         }
         using var db = new AppDataContext();
-        List<Product> tempProducts = db.Products.ToList();
+        List<Product> tempProducts = db.Products.Include(z=>z.Category).ToList();
         if (CategoryFilter is not null)
         {
             var combobox = obj as ComboBox;
@@ -99,6 +101,7 @@ public class UserHomePageViewModel : BaseViewModel
             tempProducts = tempProducts.Where(x => x.ProductName.Contains(NameFilter)).ToList();
         if (descriptionFilter != "")
             tempProducts = tempProducts.Where(x => x.ProductDescription.Contains(DescriptionFilter)).ToList();
+        tempProducts = tempProducts.Where(x => x.RatingView >= RatingFilter).ToList();
         Products = new(tempProducts);
     }
 

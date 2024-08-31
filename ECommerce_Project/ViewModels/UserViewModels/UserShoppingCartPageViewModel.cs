@@ -1,5 +1,6 @@
 ﻿using ECommerce_Project.Command;
 using ECommerce_Project.Entity.Models;
+using ECommerce_Project.Services;
 using ECommerce_Project.ViewModels.CommonViewModels;
 using ECommerce_Project.Views.UserViews;
 using Microsoft.EntityFrameworkCore;
@@ -164,6 +165,8 @@ public class UserShoppingCartPageViewModel : BaseViewModel
 
                 window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 window.Show();
+
+                MailService.SendMail(User.Email!, User.ShoppingCart);
             }
 
             User.ShoppingCart = new();

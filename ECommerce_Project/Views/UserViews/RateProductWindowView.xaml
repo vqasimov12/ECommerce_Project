@@ -5,15 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ECommerce_Project.Views.UserViews" xmlns:syncfusion="http://schemas.syncfusion.com/wpf" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         mc:Ignorable="d"
-        Title="" Height="450" Name="page" Width="800" ResizeMode="NoResize" >
+        Title="" Height="450" Name="page" Width="800" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen" Background="#060405">
 
     <StackPanel>
-        
-    <ScrollViewer MinHeight="330" VerticalScrollBarVisibility="Auto">
-        <ListView x:Name="List" ScrollViewer.HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding Products}" Background="Transparent" BorderThickness="0">
-            <ListView.View>
+        <TextBlock  Margin="10 20" FontFamily="Times New Roman" Text="Please Rate Products" Foreground="White" FontSize="30"/>
+        <ScrollViewer VerticalAlignment="Center" HorizontalAlignment="Center" Height="270" VerticalScrollBarVisibility="Auto">
+        <ListView x:Name="List" ScrollViewer.HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding Products}" BorderThickness="0">
+
+                <ListView.Resources>
+                    <Style TargetType="GridViewColumnHeader">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="Padding" Value="5"/>
+                    </Style>
+                </ListView.Resources>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="FontSize" Value="14"/>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
                 <GridView>
-                    <!-- Product Image Column -->
+
                     <GridViewColumn Header="Image" Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -30,7 +60,6 @@
                     <GridViewColumn Header="Product Name" Width="140" DisplayMemberBinding="{Binding Product.ProductName}"/>
                     <GridViewColumn Header="Category" Width="140" DisplayMemberBinding="{Binding Product.Category.Name}"/>
 
-                    <!-- Rate Button Column -->
                     <GridViewColumn Header="Rate" Width="160">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -44,6 +73,6 @@
         </ListView>
     </ScrollViewer>
 
-        <Button VerticalAlignment="Bottom" Margin="20" Width="160" Height="50" Content="Commit" FontSize="20" FontFamily="Times New Roman" FontWeight="Bold" Command="{Binding CommitCommand}" CommandParameter="{Binding ElementName=page}"/>
+        <Button  HorizontalAlignment="Right" Margin="20 15 50 10" Width="160" Height="50" Content="Commit" FontSize="20" FontFamily="Times New Roman" FontWeight="Bold" Command="{Binding CommitCommand}" CommandParameter="{Binding ElementName=page}"/>
     </StackPanel>
 </Window>

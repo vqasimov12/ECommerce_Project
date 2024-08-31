@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:local="clr-namespace:ECommerce_Project.Views.UserViews"
+        xmlns:local="clr-namespace:ECommerce_Project.Views.UserViews" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         mc:Ignorable="d"
         Title="UserProductWindowView" Height="580" Width="432" Background="#060405" ResizeMode="NoResize" Name="page">
     <Grid>
@@ -53,7 +53,6 @@ xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 
             <StackPanel Orientation="Horizontal">
 
-
                 <TextBlock Text="Price" Width="150" Height="30"  Margin="15 15 0 0"
       VerticalAlignment="Top" 
       Background="Transparent"
@@ -69,15 +68,13 @@ xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
             <StackPanel Orientation="Horizontal">
 
 
-                <TextBlock Text="Quantity" Width="150" Height="30"  Margin="15 15 0 0"
+                <TextBlock Text="Rating" Width="150" Height="30"  Margin="15 15 0 0"
       VerticalAlignment="Top" 
       Background="Transparent"
       Foreground="#fef3d6" FontSize="20"/>
 
-                <TextBlock Text="{Binding Product.Quantity}" Width="225" Height="30"  FontSize="20"  Margin="15"
- VerticalAlignment="Top" 
- Background="Transparent"
- Foreground="#fef3d6" />
+                <syncfusion:SfRating ItemsCount="5" Precision="Exact" VerticalAlignment="Center" Margin="15" Width="100"
+Value="{Binding Product.RatingView, Mode=TwoWay}" IsReadOnly="True" ItemSize="20" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">

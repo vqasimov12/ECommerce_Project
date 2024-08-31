@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ECommerce_Project.Views.UserViews"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UserOrderPageView" Background="#a3a3a3">
@@ -66,7 +66,7 @@
                                             <DataTemplate>
                                                 <StackPanel>
                                                     <TextBlock Text="{Binding Product.ProductName}" FontWeight="Bold" FontSize="16" Foreground="#333"/>
-                                                    <TextBlock Text="{Binding Product.Category.Name}" Foreground="Gray" FontSize="14"/>
+                                                    <TextBlock Text="{Binding Product.Category.Name}" FontStyle="Italic" Foreground="Gray" FontSize="14"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -79,11 +79,21 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-
+                                    
+                                <!-- rating-->
+                                    <GridViewColumn Header="Rating" Width="auto">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <syncfusion:SfRating ItemsCount="5" Precision="Exact" VerticalAlignment="Center" Width="100"
+Value="{Binding Product.RatingView, Mode=TwoWay}" IsReadOnly="True" ItemSize="14" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    
                                     <GridViewColumn Header="Quantity">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                    <TextBlock Text="{Binding Count}" FontWeight="Bold" FontSize="16" Foreground="#333"/>
+                                                    <TextBlock Margin="15 0 0 0" Text="{Binding Count}" FontWeight="Bold" FontSize="16" Foreground="#333"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -91,7 +101,7 @@
                                     <GridViewColumn Header="Total Price">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding TotalPrice}" FontWeight="Bold" FontSize="16" Foreground="#333"/>
+                                                <TextBlock Margin="5 0 " Text="{Binding TotalPrice, StringFormat=\{0:F2\}$}" FontWeight="Bold" FontSize="16" Foreground="#333"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
