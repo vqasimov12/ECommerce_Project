@@ -193,6 +193,7 @@ public class UserHomePageViewModel : BaseViewModel
         using var db = new AppDataContext();
         prod = db.Products.Include(x => x.Category).FirstOrDefault(z => z.Id == prod.Id);
         if (prod is null) return;
+        prod.CurrentImage = prod.CoverImage;
         datacontext.Product = prod;
         window.DataContext = datacontext;
         window.WindowStartupLocation = WindowStartupLocation.CenterScreen;

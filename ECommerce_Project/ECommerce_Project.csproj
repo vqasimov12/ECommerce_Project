@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Entity\Interfaces\**" />
+    <EmbeddedResource Remove="Entity\Interfaces\**" />
+    <None Remove="Entity\Interfaces\**" />
+    <Page Remove="Entity\Interfaces\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Icons\check.png" />
     <None Remove="Icons\Dislike.png" />
     <None Remove="Icons\Like.png" />
@@ -40,10 +47,6 @@
     <Content Include="Icons\visamasterdiscover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Entity\Interfaces\" />
   </ItemGroup>
 
   <ItemGroup>

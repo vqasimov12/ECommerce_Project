@@ -21,7 +21,7 @@
                         <GridViewColumn Header="Image" Width="80">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Image Source="{Binding Image}" Width="50" Height="50" Stretch="UniformToFill"/>
+                                    <Image Source="{Binding CoverImage}" Width="50" Height="50" Stretch="UniformToFill"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

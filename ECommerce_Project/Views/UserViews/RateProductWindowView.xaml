@@ -48,7 +48,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Border Width="60" Height="60" CornerRadius="30" VerticalAlignment="Center">
-                                    <Image Source="{Binding Product.Image}" Stretch="Uniform"/>
+                                    <Image Source="{Binding Product.CoverImage}" Stretch="Uniform"/>
                                 </Border>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

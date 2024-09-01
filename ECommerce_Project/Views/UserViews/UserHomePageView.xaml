@@ -8,7 +8,6 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UserHomePageView" Background="#060405">
     <Page.Resources>
-        <!-- Custom Style for Like Button -->
         <Style x:Key="LikeButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
@@ -29,12 +28,10 @@
                                Height="25"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <!-- Change opacity on hover -->
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Opacity" Value="0.8"/>
                             </Trigger>
 
-                            <!-- Change opacity when button is pressed -->
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter Property="Opacity" Value="0.6"/>
                             </Trigger>
@@ -104,7 +101,7 @@
        Content="Refresh" Margin="20 5"  VerticalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
-        <!-- Existing ScrollViewer and ListView -->
+
         <ScrollViewer Background="#aeb2b3" Margin="2" Grid.Row="2">
             <ListView Margin="5 20" x:Name="ListViewProducts" ItemsSource="{Binding Products}" 
                   SelectedItem="{Binding SelectedProduct}" ScrollViewer.CanContentScroll="True" 
@@ -126,7 +123,7 @@
                                         CornerRadius="10"
                                         BorderThickness="1.6" BorderBrush="Gray">
                                         <Border.Background>
-                                            <ImageBrush Stretch="Fill" ImageSource="{Binding Image, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <ImageBrush Stretch="Fill" ImageSource="{Binding CoverImage, UpdateSourceTrigger=PropertyChanged}"/>
                                         </Border.Background>
                                     </Border>
                                 </DockPanel>

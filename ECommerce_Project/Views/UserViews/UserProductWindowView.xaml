@@ -20,7 +20,17 @@ xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 
         <StackPanel Grid.Row="1"  >
 
-            <Image Source="{Binding Product.Image}"  Height="150" HorizontalAlignment="Center" Margin="20 5"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="100 0 10 0" Width="50" Height="130" Command="{Binding LeftCommand}" BorderThickness="0" Background="Transparent">
+                    <materialDesign:PackIcon Kind="ArrowLeftDropCircleOutline" Height="40" Width="20" />
+                </Button>
+
+                <Image Source="{Binding Product.CurrentImage}"  Height="150" Width="150" Stretch="Uniform" />
+
+                <Button Command="{Binding RightCommand}" Margin="10 0" Width="50" Height="130" BorderThickness="0" Background="Transparent">
+                    <materialDesign:PackIcon Kind="ArrowRightDropCircleOutline" Height="40" Width="20" />
+                </Button>
+            </StackPanel>
 
             <StackPanel Orientation="Horizontal">
 

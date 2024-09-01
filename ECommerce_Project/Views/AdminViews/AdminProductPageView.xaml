@@ -30,8 +30,8 @@
             <StackPanel Grid.Column="0" HorizontalAlignment="Left">
 
                 <StackPanel Orientation="Horizontal"  Height="82" Margin="0 -20 0 0">
-                    <Image Source="{Binding Product.Image}"  Height="80" Width="110" HorizontalAlignment="Left" Margin="20 5"/>
-                    <Button Content="Select Image" Background="#ff7740" Command="{Binding SelectImageCommand}" HorizontalAlignment="Right" Margin="10 0"/>
+                    <Image Source="{Binding Product.CoverImage}"  Height="80" Width="110" HorizontalAlignment="Left" Margin="20 5"/>
+                    <Button Content="Edit Images" Background="#ff7740" Command="{Binding SelectImageCommand}" HorizontalAlignment="Right" Margin="10 0"/>
                 </StackPanel>
 
 
@@ -129,7 +129,7 @@
                                 <GridViewColumn Header="Image" Width="80">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Image Source="{Binding Image}" Width="50" Height="50" Stretch="UniformToFill"/>
+                                            <Image Source="{Binding CoverImage}" Width="50" Height="50" Stretch="UniformToFill"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

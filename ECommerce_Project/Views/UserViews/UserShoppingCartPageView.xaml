@@ -20,26 +20,23 @@ xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
             <RowDefinition Height="5*"/>
             <RowDefinition Height="1.2*"/>
         </Grid.RowDefinitions>
-        <!--Shopping Cart Section-->
+
             <TextBlock Grid.Row="0" Text="Your Shopping Cart" FontSize="24" FontWeight="Bold" Foreground="#333" Margin="0 20"/>
 
-            <!-- Cart Items with Column Headers -->
             <ScrollViewer Grid.Row="1" MinHeight="400" VerticalScrollBarVisibility="Auto">
                 <ListView x:Name="List" ScrollViewer.HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding Products}" Background="Transparent" BorderThickness="0">
                     <ListView.View>
                         <GridView>
-                            <!-- Product Image Column -->
                             <GridViewColumn Header="Image" Width="100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Border Width="60" Height="60" CornerRadius="30" VerticalAlignment="Center">
-                                            <Image Source="{Binding Product.Image}" Stretch="Uniform"/>
+                                            <Image Source="{Binding Product.CoverImage}" Stretch="Uniform"/>
                                         </Border>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <!-- Product Details Column -->
                             <GridViewColumn Header="Product Details" Width="auto">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -61,19 +58,16 @@ xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                             </GridViewColumn>
 
 
-                            <!-- Quantity and Actions Column -->
                             <GridViewColumn Header="   Quantity     " Width="110">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                            <!-- Decrease Button -->
                                             <Button Height="30" BorderThickness="0" Background="Transparent" Command="{Binding ElementName=List,Path=DataContext.DecreaseCommand}" CommandParameter="{Binding}" Margin="-10 0 -4 0">
                                                 <materialDesign:PackIcon Foreground="#FF5722" Kind="Minus"/>
                                             </Button>
 
                                             <TextBlock Width="20" Text="{Binding Count}" FontSize="16" />
 
-                                            <!-- Increase Button -->
                                             <Button Height="30" BorderThickness="0" Background="Transparent" Command="{Binding ElementName=List,Path=DataContext.IncreaseCommand}" CommandParameter="{Binding}" Margin="-11 0 0 0" >
                                                 <materialDesign:PackIcon Foreground="#FF5722" Kind="Plus"/>
                                             </Button>
@@ -82,7 +76,6 @@ xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <!-- Total Price Column -->
                             <GridViewColumn Header="Total Price" Width="97">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -91,7 +84,6 @@ xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <!-- Remove Button Column -->
                             <GridViewColumn Header="Remove" Width="auto">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>

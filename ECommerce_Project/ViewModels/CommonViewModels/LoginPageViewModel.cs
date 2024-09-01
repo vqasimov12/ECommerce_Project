@@ -95,6 +95,9 @@ public class LoginPageViewModel : BaseViewModel
         window.Width = 1070;
         window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         window.Height = 630;
+        //var _page = App.Container.GetInstance<AdminDashboardPageView>();
+        //var datacontext = App.Container.GetInstance<AdminDashboardPageViewModel>();
+        
         var _page = App.Container.GetInstance<UserDashboardPageView>();
         var datacontext = App.Container.GetInstance<UserDasboardPageViewModel>();
         datacontext.User = user;

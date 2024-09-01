@@ -7,6 +7,7 @@ using System.Windows.Input;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.EntityFrameworkCore;
+using ECommerce_Project.Views.AdminViews;
 
 namespace ECommerce_Project.ViewModels.AdminViewModels;
 public class AdminProductPageViewModel : BaseViewModel
@@ -17,12 +18,7 @@ public class AdminProductPageViewModel : BaseViewModel
     private bool _addVisible = true;
     private Category category; 
     private bool isEditting = false;
-    private Account account = new Account(
-      "doolsly8j",
-      "445179498452818",
-      "SMlohF-hU9X8GBILv3FqTX_Q2Ok");
-    private Cloudinary cloudinary { get; set; }
-
+ 
     public Product Product { get => product; set { product = value; OnPropertyChanged(); } }
     public Category Category { get => category; set { category = value; OnPropertyChanged(); } }
     public ObservableCollection<Category> Categories { get => categories; set { categories = value; OnPropertyChanged(); } }
@@ -38,7 +34,6 @@ public class AdminProductPageViewModel : BaseViewModel
         SearchCommand = new RelayCommand(SearchCommandExecute);
         RefreshCommand = new RelayCommand(RefreshCommandExecute);
         RefreshDataSource();
-        cloudinary = new Cloudinary(account);
     }
     public void RefreshDataSource()
     {
@@ -71,16 +66,7 @@ public class AdminProductPageViewModel : BaseViewModel
         using var db = new AppDataContext();
         var cat = db.Categories.FirstOrDefault(x => x.Name == Category.Name);
         Product.Category = cat;
-
-        var uploadParams = new ImageUploadParams()
-        {
-            File = new FileDescription(Product.Image)
-        };
-
-        var uploadResult = cloudinary.Upload(uploadParams);
-        string imageUrl = uploadResult.SecureUrl.ToString();
         Product.Quantity ??= 0;
-        Product.Image = imageUrl;
         db.Products.Add(Product);
         db.SaveChanges();
         RefreshDataSource();
@@ -108,7 +94,10 @@ public class AdminProductPageViewModel : BaseViewModel
             if (lw is null) return;
             var _prod = lw.SelectedItem as Product;
             if (_prod is null) return;
+            using var db = new AppDataContext();
+            _prod= db.Products.Include(z=>z.Category).FirstOrDefault(x => x.Id == _prod.Id);
             Product.SetProduct(_prod);
+            Product.CoverImage = _prod.CoverImage;
             Category = Product.Category;
             isEditting = true;
         }
@@ -118,17 +107,11 @@ public class AdminProductPageViewModel : BaseViewModel
             _addVisible = true;
             using var db = new AppDataContext();
             var pr = db.Products.FirstOrDefault(x => x.Id == Product.Id);
-            var uploadParams = new ImageUploadParams()
-            {
-                File = new FileDescription(Product.Image)
-            };
-
-            var uploadResult = cloudinary.Upload(uploadParams);
-            string imageUrl = uploadResult.SecureUrl.ToString();
+           
             Product.Quantity ??= 0;
-            Product.Image = imageUrl;
             Product.Category = Category;
             pr.SetProduct(Product);
+            pr.CoverImage=Product.CoverImage;
             db.SaveChanges();
             Product = new();
             Category = new();
@@ -168,13 +151,13 @@ public class AdminProductPageViewModel : BaseViewModel
     public ICommand SelectImageCommand { get; set; }
     public void SelectImageCommandExecute(object? obj)
     {
-        System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
-        dlg.Filter = "Image files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
-        dlg.ShowDialog();
-        string? result = dlg.FileName;
-        if (result is null)
-            return;
-        Product.Image = result;
+        var window = new AdminEditProductImagesWindowView();
+        var data = App.Container.GetInstance<AdminEditProductImagesWindowViewModel>();
+        data.ProductImages = Product.Images;
+        data.CoverImage=Product.CoverImage;
+        window.DataContext = data;
+        window.ShowDialog();
+        //Product.Image = result;
     }
 
     #endregion

@@ -148,7 +148,7 @@ public class MailService
         {
             var ratingStars = generateRatingStars((int)p.Product.RatingView);
             sb.AppendLine("<tr>");
-            sb.AppendLine($"<td class='image-cell'><img src='{p.Product.Image}' alt='Product Image'/></td>");
+            sb.AppendLine($"<td class='image-cell'><img src='{p.Product.CoverImage}' alt='Product Image'/></td>");
             sb.AppendLine($"<td><strong>{p.Product.ProductName}</strong><br/><em>{p.Product.Category.Name}</em></td>");
             sb.AppendLine($"<td><div class='rating'>{ratingStars}</div></td>");
             sb.AppendLine($"<td>{p.Count}</td>"); sb.AppendLine($"<td>${p.TotalPrice}</td>");

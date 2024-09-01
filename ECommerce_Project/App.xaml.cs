@@ -51,6 +51,7 @@ public partial class App : Application
         Container.RegisterSingleton<AdminCustomersPageViewModel>();
         Container.RegisterSingleton<AdminHomePageViewModel>();
         Container.RegisterSingleton<AdminOrderPageViewModel>();
+        Container.RegisterSingleton<AdminEditProductImagesWindowViewModel>();
 
         Container.RegisterSingleton<LoginPageViewModel>();
 

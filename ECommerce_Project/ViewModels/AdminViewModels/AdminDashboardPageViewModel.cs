@@ -143,6 +143,7 @@ public class AdminDashboardPageViewModel : BaseViewModel
         var _page = App.Container.GetInstance<LoginPageView>();
         _page.DataContext = App.Container.GetInstance<LoginPageViewModel>();
         var window = NavigationWindow.GetWindow(page);
+        window.WindowState = WindowState.Normal;
         window.Height = 450;
         window.Width = 800;
         window.ResizeMode = ResizeMode.NoResize;
