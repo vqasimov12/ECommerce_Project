@@ -21,8 +21,8 @@ public class UserProfilePageViewModel : BaseViewModel
     private bool isOtpCodeVisible;
     public string Password1 { get => password1; set { password1 = value; OnPropertyChanged(); } }
     public User User1 { get => user1; set { user1 = value; OnPropertyChanged(); } }
-     Cloudinary cloudinary { get; set; }
-    Account account = new Account("doolsly8j", "445179498452818","SMlohF-hU9X8GBILv3FqTX_Q2Ok");
+    Cloudinary cloudinary { get; set; }
+    Account account = new Account("doolsly8j", "445179498452818", "SMlohF-hU9X8GBILv3FqTX_Q2Ok");
 
     public void RefreshDataSource()
     {
@@ -49,7 +49,7 @@ public class UserProfilePageViewModel : BaseViewModel
         dlg.Filter = "Image files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
         dlg.ShowDialog();
         string? result = dlg.FileName;
-        if (result is null)
+        if (string.IsNullOrEmpty(result))
             return;
         User1.Image = result;
     }
@@ -96,7 +96,12 @@ public class UserProfilePageViewModel : BaseViewModel
             else if (SecondR == false)
             {
                 IsOtpCodeVisible = true;
-                MailService.SendMail(User1?.Email!);
+                new Thread(() =>
+                {
+                    MailService.SendMail(User1?.Email!);
+
+                }).Start();
+
                 SecondR = true;
                 EmailIsReadonly = true;
             }
@@ -125,7 +130,7 @@ public class UserProfilePageViewModel : BaseViewModel
 
         #endregion
 
-    #endregion
+        #endregion
 
     }
 }

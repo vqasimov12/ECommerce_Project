@@ -16,6 +16,8 @@ public partial class App : Application
     public App()
     {
         SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NCaF1cWWhAYVF+WmFZfVpgdVRMYlVbQH5PIiBoS35RckVrW3Zcc3BWQ2NVVkN1");
+
+
         Container.RegisterSingleton<MainWindow>();
         Container.RegisterSingleton<AppDataContext>();
         RegisterViews();
@@ -66,6 +68,8 @@ public partial class App : Application
     }
     protected override void OnStartup(StartupEventArgs e)
     {
+        var window = new LoadingWindowView();
+        window.Show();
         var view = Container.GetInstance<MainWindow>();
         var page = Container.GetInstance<LoginPageView>();
         page.DataContext = Container.GetInstance<LoginPageViewModel>();

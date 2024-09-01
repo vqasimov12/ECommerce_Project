@@ -14,7 +14,6 @@ public class AdminCustomersPageViewModel : BaseViewModel
     public ObservableCollection<User> Users { get => users; set { users = value; OnPropertyChanged(); } }
     public AdminCustomersPageViewModel()
     {
-        RemoveCommand = new RelayCommand(RemoveCommandExecute);
         RefreshDataSource();
     }
     public void RefreshDataSource()
@@ -25,18 +24,18 @@ public class AdminCustomersPageViewModel : BaseViewModel
             Users.Add(user);
     }
 
-    #region RemoveCommand
-    public ICommand RemoveCommand { get; set; }
-    public void RemoveCommandExecute(object? obj)
-    {
-        var user = obj as User;
-        if (user is null) return;
-        using var db = new AppDataContext();
-        var _u = db.Users.FirstOrDefault(x => x.Id == user.Id);
-        if (_u is null) return;
-        db.Users.Remove(_u);
-        db.SaveChanges();
-        RefreshDataSource();
-    }
-    #endregion
+    //#region RemoveCommand
+    //public ICommand RemoveCommand { get; set; }
+    //public void RemoveCommandExecute(object? obj)
+    //{
+    //    var user = obj as User;
+    //    if (user is null) return;
+    //    using var db = new AppDataContext();
+    //    var _u = db.Users.FirstOrDefault(x => x.Id == user.Id);
+    //    if (_u is null) return;
+    //    db.Users.Remove(_u);
+    //    db.SaveChanges();
+    //    RefreshDataSource();
+    //}
+    //#endregion
 }

@@ -5,7 +5,6 @@ namespace ECommerce_Project.Entity.Models;
 public class Order:NotifyPropertyChangedService
 {
     private ObservableCollection<ProductView> products = [];
-
     public int Id { get; set; }
     public int UserId { get; set; }
     public virtual User User { get; set; }

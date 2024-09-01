@@ -16,9 +16,9 @@ public class AdminProductPageViewModel : BaseViewModel
     private ObservableCollection<Category> categories;
     private ObservableCollection<Product> products;
     private bool _addVisible = true;
-    private Category category; 
+    private Category category;
     private bool isEditting = false;
- 
+
     public Product Product { get => product; set { product = value; OnPropertyChanged(); } }
     public Category Category { get => category; set { category = value; OnPropertyChanged(); } }
     public ObservableCollection<Category> Categories { get => categories; set { categories = value; OnPropertyChanged(); } }
@@ -57,6 +57,7 @@ public class AdminProductPageViewModel : BaseViewModel
     public ICommand AddCommand { get; set; }
     public bool AddCommandCanExecute(object? obj)
     {
+        if (isEditting) return false;
         if (_addVisible && Product.ProductName?.Length >= 3 && Product.ProductDescription?.Length >= 2 && Product.Price > 0 && Category is not null)
             return true;
         return false;
@@ -95,7 +96,7 @@ public class AdminProductPageViewModel : BaseViewModel
             var _prod = lw.SelectedItem as Product;
             if (_prod is null) return;
             using var db = new AppDataContext();
-            _prod= db.Products.Include(z=>z.Category).FirstOrDefault(x => x.Id == _prod.Id);
+            _prod = db.Products.Include(z => z.Category).FirstOrDefault(x => x.Id == _prod.Id);
             Product.SetProduct(_prod);
             Product.CoverImage = _prod.CoverImage;
             Category = Product.Category;
@@ -107,11 +108,11 @@ public class AdminProductPageViewModel : BaseViewModel
             _addVisible = true;
             using var db = new AppDataContext();
             var pr = db.Products.FirstOrDefault(x => x.Id == Product.Id);
-           
+
             Product.Quantity ??= 0;
             Product.Category = Category;
             pr.SetProduct(Product);
-            pr.CoverImage=Product.CoverImage;
+            pr.CoverImage = Product.CoverImage;
             db.SaveChanges();
             Product = new();
             Category = new();
@@ -127,9 +128,11 @@ public class AdminProductPageViewModel : BaseViewModel
     public bool DeleteCommandCanExecute(object? obj)
     {
         var lw = obj as ListView;
+
         if (lw is null)
             return false;
         return lw.SelectedItem is not null;
+
     }
     public void DeleteCommandExecute(object? obj)
     {
@@ -140,6 +143,8 @@ public class AdminProductPageViewModel : BaseViewModel
 
         var pr = db.Products.FirstOrDefault(x => x.Id == _pr.Id);
         db.Products.Remove(pr);
+        isEditting = false;
+        _addVisible = true;
         db.SaveChanges();
         RefreshDataSource();
     }
@@ -154,7 +159,7 @@ public class AdminProductPageViewModel : BaseViewModel
         var window = new AdminEditProductImagesWindowView();
         var data = App.Container.GetInstance<AdminEditProductImagesWindowViewModel>();
         data.ProductImages = Product.Images;
-        data.CoverImage=Product.CoverImage;
+        data.CoverImage = Product.CoverImage;
         window.DataContext = data;
         window.ShowDialog();
         //Product.Image = result;

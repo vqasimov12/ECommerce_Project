@@ -36,13 +36,6 @@
                         <GridViewColumn Header="Address" Width="Auto" DisplayMemberBinding="{Binding Address}"/>
                         <GridViewColumn Header="Phone" Width="100" DisplayMemberBinding="{Binding Phone}"/>
 
-                        <GridViewColumn Header="Remove" Width="150">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Width="100" Content="Remove" BorderBrush="#ff7740" Background="#ff7740" Foreground="White" FontSize="15" Command="{Binding ElementName=List,Path=DataContext.RemoveCommand}" CommandParameter="{Binding}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
