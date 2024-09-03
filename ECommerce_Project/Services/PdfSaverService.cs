@@ -53,6 +53,8 @@ public class PdfSaverService
             Xgraph.DrawString($"  Quantity:           {productView.Count}", bodyFont, XBrushes.Black, new XPoint(60, yPosition));
             yPosition += 20;
             Xgraph.DrawString($"  Price:                 {productView.Product.Price:C}", bodyFont, XBrushes.Black, new XPoint(60, yPosition));
+            yPosition += 20;
+            Xgraph.DrawString($"  Total Price:        {productView.TotalPrice:C}", bodyFont, XBrushes.Black, new XPoint(60, yPosition));
             yPosition += 30;
             i++;
         }
