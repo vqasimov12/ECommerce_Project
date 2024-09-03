@@ -58,6 +58,6 @@ public class Product : NotifyPropertyChangedService
         Quantity = other.Quantity;
         LikeImage = other.LikeImage;
         Images = other.Images;
-        CurrentImage = other.CurrentImage;
+        CoverImage = other.CoverImage;
     }
 }

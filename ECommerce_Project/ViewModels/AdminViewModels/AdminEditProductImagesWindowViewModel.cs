@@ -27,7 +27,7 @@ public class AdminEditProductImagesWindowViewModel : BaseViewModel
 
     public void Refresh()
     {
-        ProductImages = new();
+        ProductImages = null;
         CoverImage = "";
         SelectedImage = "";
     }

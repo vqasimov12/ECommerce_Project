@@ -4,7 +4,6 @@ using ECommerce_Project.Services;
 using ECommerce_Project.ViewModels.CommonViewModels;
 using ECommerce_Project.Views.UserViews;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -25,6 +24,7 @@ public class UserShoppingCartPageViewModel : BaseViewModel
         IncreaseCommand = new RelayCommand(IncreaseCommandExecute, IncreaseCommandCanExecute);
         DecreaseCommand = new RelayCommand(DecreaseCommandExecute, DecreaseCommandCanExecute);
         PurchaseCommand = new RelayCommand(PurchaseCommandExecute, PurchaseCommandCanExecute);
+        DetailsCommand = new RelayCommand(DetailsCommandExecute);
     }
 
     public void RefreshDataSource()
@@ -109,25 +109,26 @@ public class UserShoppingCartPageViewModel : BaseViewModel
     public ICommand RemoveCommand { get; set; }
     public void RemoveCommandExecute(object? obj)
     {
-        try
-        {
-            using var db = new AppDataContext();
-            User = db.Users
-                .Include(x => x.ShoppingCart).ThenInclude(z => z.Product)
-                .FirstOrDefault(x => x.Id == User.Id)!;
+        if (MessageBox.Show("Are you sure to delete this product from cart?", "Removing", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            try
+            {
+                using var db = new AppDataContext();
+                User = db.Users
+                    .Include(x => x.ShoppingCart).ThenInclude(z => z.Product)
+                    .FirstOrDefault(x => x.Id == User.Id)!;
 
-            var prod = obj as ProductView;
-            if (prod is null) return;
-            var cartItem = User.ShoppingCart
-           .Where(z => z.Product.Id == prod.Product.Id).ToList();
-            if (cartItem.Count == 0) return;
-            foreach (var item in cartItem)
-                User.ShoppingCart.Remove(item);
-            db.SaveChanges();
-            RefreshDataSource();
-        }
-        catch
-        { }
+                var prod = obj as ProductView;
+                if (prod is null) return;
+                var cartItem = User.ShoppingCart
+               .Where(z => z.Product.Id == prod.Product.Id).ToList();
+                if (cartItem.Count == 0) return;
+                foreach (var item in cartItem)
+                    User.ShoppingCart.Remove(item);
+                db.SaveChanges();
+                RefreshDataSource();
+            }
+            catch
+            { }
     }
     #endregion
 
@@ -146,7 +147,7 @@ public class UserShoppingCartPageViewModel : BaseViewModel
         if (CanPurchase)
         {
             using var db = new AppDataContext();
-            User = db.Users.Include(z => z.Orders).Include(z => z.ShoppingCart).ThenInclude(z => z.Product).ThenInclude(z=>z.Category).FirstOrDefault(z => z.Id == User.Id)!;
+            User = db.Users.Include(z => z.Orders).Include(z => z.ShoppingCart).ThenInclude(z => z.Product).ThenInclude(z => z.Category).FirstOrDefault(z => z.Id == User.Id)!;
 
             var order = new Order { OrderDate = DateTime.Now, Products = User.ShoppingCart, TotalPrice = SubTotal, User = User, DeliveryDate = DateTime.Now.AddDays(3) };
             User.Orders.Add(order);
@@ -182,6 +183,30 @@ public class UserShoppingCartPageViewModel : BaseViewModel
             page.DataContext = datacontext;
             model.CurrentPage = page;
         }
+    }
+
+    #endregion
+
+    #region DetailsCommand
+
+    public ICommand DetailsCommand { get; set; }
+    public void DetailsCommandExecute(object? obj)
+    {
+        var prodview = obj as ProductView;
+        if (prodview is null) return;
+        var prod = prodview.Product;
+        var window = new UserProductWindowView();
+        var datacontext = new UserProductWindowViewModel();
+        using var db = new AppDataContext();
+        prod = db.Products.Include(x => x.Category).FirstOrDefault(z => z.Id == prod.Id);
+        if (prod is null) return;
+        prod.CurrentImage = prod.CoverImage;
+        datacontext.Product = prod;
+        window.DataContext = datacontext;
+        window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+        window.WindowStyle = WindowStyle.None;
+
+        window.ShowDialog();
     }
 
     #endregion

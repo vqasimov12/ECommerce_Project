@@ -2,7 +2,9 @@
 using ECommerce_Project.Entity.Models;
 using ECommerce_Project.Services;
 using ECommerce_Project.ViewModels.CommonViewModels;
+using ECommerce_Project.Views.UserViews;
 using Microsoft.EntityFrameworkCore;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -25,6 +27,7 @@ public class UserOrderPageViewModel : BaseViewModel
     public UserOrderPageViewModel()
     {
         FileDownloadCommand = new RelayCommand(FileDownloadCommandExecute);
+        DetailsCommand=new RelayCommand(DetailsCommandExecute);
     }
 
     #region Commands
@@ -44,7 +47,30 @@ public class UserOrderPageViewModel : BaseViewModel
 
     #endregion
 
+    #region DetailsCommand
 
+    public ICommand DetailsCommand { get; set; }
+    public void DetailsCommandExecute(object? obj)
+    {
+        var prodview = obj as ProductView;
+        if (prodview is null) return;
+        var prod=prodview.Product;
+        var window = new UserProductWindowView();
+        var datacontext = new UserProductWindowViewModel();
+        using var db = new AppDataContext();
+        prod = db.Products.Include(x => x.Category).FirstOrDefault(z => z.Id == prod.Id);
+        if (prod is null) return;
+        prod.CurrentImage = prod.CoverImage;
+        datacontext.Product = prod;
+        window.DataContext = datacontext;
+        window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+        window.WindowStyle = WindowStyle.None;
+
+        window.ShowDialog();
+    }
+
+    #endregion
+   
     #endregion
 
 }

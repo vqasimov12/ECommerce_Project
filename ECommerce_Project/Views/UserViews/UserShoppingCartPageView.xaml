@@ -84,7 +84,17 @@ xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <GridViewColumn Header="Remove" Width="auto">
+                        <GridViewColumn  Header="Details" Width="80">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button  Command="{Binding ElementName=List,Path= DataContext.DetailsCommand}" CommandParameter="{Binding}" Background="#FF5722"  Padding="0" Width="60" Height="30">
+                                        <materialDesign:PackIcon Kind="Settings" />
+                                    </Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Remove" Width="auto">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Height="30" BorderThickness="0" Background="Transparent" Command="{Binding ElementName=List,Path=DataContext.RemoveCommand}" CommandParameter="{Binding}">

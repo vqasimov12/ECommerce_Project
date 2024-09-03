@@ -67,44 +67,48 @@ public class SignUpPageViewModel : BaseViewModel
         return (Regex.IsMatch(User?.Name, @"^[a-zA-Z]{3,25}$") &&
             Regex.IsMatch(User?.Email, "^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\\.[a-zA-Z]{2,4}$") &&
             Regex.IsMatch(User?.Surname, @"^[a-zA-Z]{3,25}$") &&
-            Regex.IsMatch(User?.Phone, @"(?:50|51|70|77|10|99|55|57) \d{3} \d{2} \d{2}") &&
+            User?.Phone.Length >= 7 &&
             User?.Password?.Length > 3);
     }
     public void RegisterCommandExecute(object? obj)
     {
 
-            if (User.Password != Password1)
+        if (User.Password != Password1)
+        {
+            MessageBox.Show("Passwords do not match", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
+        if (!IsOtpCodeVisible)
+        {
+            if (CheckEmail(User?.Email!) is not null)
             {
-                MessageBox.Show("Passwords do not match", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                MessageBox.Show("This Email has already been used change another one", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                user.Email = "";
             }
-            if (!IsOtpCodeVisible)
+            else if (SecondR == false)
             {
-                if (CheckEmail(User?.Email!) is not null)
+                IsOtpCodeVisible = true;
+                new Thread(() =>
                 {
-                    MessageBox.Show("This Email has already been used change another one", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    user.Email = "";
-                }
-                else if (SecondR == false)
-                {
-                    IsOtpCodeVisible = true;
                     MailService.SendMail(User?.Email!);
-                    SecondR = true;
-                    EmailIsReadonly = true;
-                }
-            }
 
-            else
-            {
-                using var db = new AppDataContext();
-                db.Users.Add(User);
-                db.SaveChanges();
-                User = new();
-                IsOtpCodeVisible = false;
-                OTPCode = "";
-                SecondR = false;
-                emailIsReadonly = false;
+                }).Start();
+                SecondR = true;
+                EmailIsReadonly = true;
             }
+        }
+
+        else
+        {
+            using var db = new AppDataContext();
+            db.Users.Add(User);
+            db.SaveChanges();
+            User = new();
+            IsOtpCodeVisible = false;
+            OTPCode = "";
+            SecondR = false;
+            emailIsReadonly = false;
+        }
     }
 
     #endregion

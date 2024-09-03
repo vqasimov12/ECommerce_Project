@@ -41,84 +41,83 @@ public class LoginPageViewModel : BaseViewModel
     public ICommand LoginCommand { get; set; }
     public void loginCommandExecute(object? obj)
     {
-        //if (Email == "admin@gmail.com")
-        //{
-        //    if (Password == "admin123")
-        //    {
-        var page = obj as Page;
-        if (page is null) return;
-        var window = Window.GetWindow(page);
-        if (window is null) return;
-        window.ResizeMode = window.ResizeMode | ResizeMode.CanResize;
-        window.WindowStyle = WindowStyle.SingleBorderWindow;
-        window.Width = 1070;
-        window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-        window.Height = 630;
-        var _page = App.Container.GetInstance<AdminDashboardPageView>();
-        var datacontext = App.Container.GetInstance<AdminDashboardPageViewModel>();
-        _page.DataContext = datacontext;
-        var currentPage = App.Container.GetInstance<AdminHomePageView>();
-        var data = App.Container.GetInstance<AdminHomePageViewModel>();
-        data.RefreshDataSource();
-        currentPage.DataContext = data;
-        datacontext.CurrentPage = currentPage;
-        if (datacontext.PreviouslySelectedPanel != null)
-            datacontext.PreviouslySelectedPanel.Tag = null;
-        var stackPanel = _page.homePanel;
-        stackPanel.Tag = "Selected";
-        datacontext.PreviouslySelectedPanel = stackPanel;
-        page.NavigationService.Navigate(_page);
-        return;
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Incorrect Password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //        return;
-        //    }
+        if (Email == "admin@gmail.com")
+        {
+            if (Password == "admin123")
+            {
+                var page = obj as Page;
+                if (page is null) return;
+                var window = Window.GetWindow(page);
+                if (window is null) return;
+                var _page = App.Container.GetInstance<AdminDashboardPageView>();
+                var datacontext = App.Container.GetInstance<AdminDashboardPageViewModel>();
+                _page.DataContext = datacontext;
+                var currentPage = App.Container.GetInstance<AdminHomePageView>();
+                var data = App.Container.GetInstance<AdminHomePageViewModel>();
+                data.RefreshDataSource();
+                currentPage.DataContext = data;
+                datacontext.CurrentPage = currentPage;
+                if (datacontext.PreviouslySelectedPanel != null)
+                    datacontext.PreviouslySelectedPanel.Tag = null;
+                var stackPanel = _page.homePanel;
+                stackPanel.Tag = "Selected";
+                datacontext.PreviouslySelectedPanel = stackPanel;
+                window.ResizeMode = window.ResizeMode | ResizeMode.CanResize;
+                window.WindowStyle = WindowStyle.SingleBorderWindow;
+                window.Width = 1070;
+                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.Height = 630;
+                page.NavigationService.Navigate(_page);
+                return;
+            }
+            else
+            {
+                MessageBox.Show("Incorrect Password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
-        //}
+        }
 
 
 
-        //var user = CheckEmail(Email);
-        //if (user is not null)
-        //if (user.Password == Password)
-        //{
-        //        using var db = new AppDataContext();
-        //var user = db.Users.FirstOrDefault();
-        //        var page = obj as Page;
-        //        if (page is null) return;
-        //        var window = Window.GetWindow(page);
-        //        if (window is null) return;
-        //        window.ResizeMode = window.ResizeMode | ResizeMode.CanResize;
-        //        window.WindowStyle = WindowStyle.SingleBorderWindow;
-        //        window.Width = 1070;
-        //        window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-        //        window.Height = 630;
+        var user = CheckEmail(Email);
+        if (user is not null)
+            if (user.Password == Password)
+            {
+                using var db = new AppDataContext();
+                var page = obj as Page;
+                if (page is null) return;
+                var window = Window.GetWindow(page);
+                if (window is null) return;
 
-        //        var _page = App.Container.GetInstance<UserDashboardPageView>();
-        //        var datacontext = App.Container.GetInstance<UserDasboardPageViewModel>();
-        //        datacontext.User = user;
-        //        _page.DataContext = datacontext;
-        //        var currentPage = App.Container.GetInstance<UserHomePageView>();
-        //        var data = App.Container.GetInstance<UserHomePageViewModel>();
-        //        data.RefreshDataSource();
-        //        data.User = user;
-        //        currentPage.DataContext = data;
-        //        datacontext.CurrentPage = currentPage;
-        //        if (datacontext.PreviouslySelectedPanel != null)
-        //            datacontext.PreviouslySelectedPanel.Tag = null;
-        //        var stackPanel = _page.homePanel;
-        //        stackPanel.Tag = "Selected";
-        //        datacontext.PreviouslySelectedPanel = stackPanel;
+                var _page = App.Container.GetInstance<UserDashboardPageView>();
+                var datacontext = App.Container.GetInstance<UserDasboardPageViewModel>();
+                datacontext.User = user;
+                _page.DataContext = datacontext;
+                var currentPage = App.Container.GetInstance<UserHomePageView>();
+                var data = App.Container.GetInstance<UserHomePageViewModel>();
+                data.RefreshDataSource();
+                data.User = user;
+                currentPage.DataContext = data;
+                datacontext.CurrentPage = currentPage;
+                if (datacontext.PreviouslySelectedPanel != null)
+                    datacontext.PreviouslySelectedPanel.Tag = null;
+                var stackPanel = _page.homePanel;
+                stackPanel.Tag = "Selected";
+                datacontext.PreviouslySelectedPanel = stackPanel;
 
-        //        page.NavigationService.Navigate(_page);
+                window.ResizeMode = window.ResizeMode | ResizeMode.CanResize;
+                window.WindowStyle = WindowStyle.SingleBorderWindow;
+                window.Width = 1070;
+                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.Height = 630;
+                page.NavigationService.Navigate(_page);
 
-        //    }
-        //    else
-        //        MessageBox.Show("Incorrect Password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //else
-        //    MessageBox.Show("Invalid Email", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+                MessageBox.Show("Incorrect Password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        else
+            MessageBox.Show("Invalid Email", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
     }
     #endregion

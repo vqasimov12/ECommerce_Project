@@ -1,4 +1,5 @@
 ﻿using ECommerce_Project.Services;
+using System.Text.RegularExpressions;
 
 namespace ECommerce_Project.Entity.Abstractions;
 public class Person : NotifyPropertyChangedService
@@ -26,6 +27,19 @@ public class Person : NotifyPropertyChangedService
     public string? Surname { get => surname; set { surname = value; OnPropertyChanged(); } }
     public string? Email { get => email; set { email = value; OnPropertyChanged(); } }
     public string? Address { get => address; set { address = value; OnPropertyChanged(); } }
-    public string? Phone { get => phone; set { phone = value; OnPropertyChanged(); } }
+    public string? Phone
+    {
+        get => phone;
+        set
+        {
+            if (Regex.IsMatch(value, @"^[0-9]{0,10}$") || string.IsNullOrEmpty(value))
+            {
+
+                phone = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     public string? Password { get => password; set { password = value; OnPropertyChanged(); } }
 }

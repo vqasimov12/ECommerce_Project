@@ -74,7 +74,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="6*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="1.2*"/>
         </Grid.RowDefinitions>
 
         <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding ProductImages}"
@@ -132,7 +132,7 @@
                 Foreground="White"
                     FontWeight="Bold"
                     Cursor="Hand" FontSize="40"
-                    Width="60" ToolTip="Add Image">
+                    Width="80" Height="40" ToolTip="Add Image">
                 <materialDesign:PackIcon Kind="Add" Margin="2" Height="25" Width="30"/>
             </Button>
 
@@ -146,7 +146,7 @@
                 Foreground="White"
                     FontWeight="Bold"
                     Cursor="Hand" FontSize="40"
-                    Width="60" ToolTip="Save">
+                    Width="80" Height="40" ToolTip="Save">
                 <materialDesign:PackIcon Kind="ContentSave" Margin="2" Height="20" Width="25"/>
             </Button>
 

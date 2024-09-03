@@ -8,6 +8,8 @@ using ECommerce_Project.Views.AdminViews;
 using ECommerce_Project.ViewModels.AdminViewModels;
 using ECommerce_Project.ViewModels.UserViewModels;
 using Syncfusion.Licensing;
+using System.Windows.Controls;
+using System.Diagnostics;
 
 namespace ECommerce_Project;
 public partial class App : Application

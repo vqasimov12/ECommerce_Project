@@ -74,8 +74,7 @@ public class UserProfilePageViewModel : BaseViewModel
     {
         return (Regex.IsMatch(User1?.Name, @"^[a-zA-Z]{3,25}$") &&
             Regex.IsMatch(User1?.Email, "^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\\.[a-zA-Z]{2,4}$") &&
-            Regex.IsMatch(User1?.Surname, @"^[a-zA-Z]{3,25}$") &&
-            Regex.IsMatch(User1?.Phone, @"(?:50|51|70|77|10|99|55|57) \d{3} \d{2} \d{2}") &&
+            Regex.IsMatch(User1?.Surname, @"^[a-zA-Z]{3,25}$") && User1?.Phone.Length>=7&&
             User1?.Password?.Length > 3);
     }
     public void SaveCommandExecute(object? obj)

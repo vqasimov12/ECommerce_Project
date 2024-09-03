@@ -9,6 +9,7 @@ using ECommerce_Project.Views.AdminViews;
 using System.Text.RegularExpressions;
 using CloudinaryDotNet.Actions;
 using CloudinaryDotNet;
+using System.Windows;
 
 namespace ECommerce_Project.ViewModels.AdminViewModels;
 public class AdminProductPageViewModel : BaseViewModel
@@ -20,6 +21,7 @@ public class AdminProductPageViewModel : BaseViewModel
     private Category category;
     private bool isEditting = false;
     private string productPrice;
+    private string productQuantity;
 
     public Product Product { get => product; set { product = value; OnPropertyChanged(); } }
     public Category Category { get => category; set { category = value; Product.Category = value; OnPropertyChanged(); } }
@@ -38,6 +40,22 @@ public class AdminProductPageViewModel : BaseViewModel
             }
         }
     }
+    public string ProductQuantity
+    {
+        get => productQuantity; set
+        {
+            if (Regex.IsMatch(value, @"^[0-9]{0,5}$") || value == "")
+            {
+                if (int.TryParse(value, out int a))
+                {
+                    Product.Quantity = a;
+                }
+                productQuantity = value;
+            }
+            OnPropertyChanged();
+        }
+    }
+
     public AdminProductPageViewModel()
     {
         Product = new();
@@ -57,6 +75,7 @@ public class AdminProductPageViewModel : BaseViewModel
         _addVisible = true;
         Category = new();
         ProductPrice = "";
+        ProductQuantity = "";
         isEditting = false;
         using var db = new AppDataContext();
         var ordercat = db.Categories.OrderBy(x => x.Id);
@@ -65,6 +84,8 @@ public class AdminProductPageViewModel : BaseViewModel
             Categories.Add(i);
         foreach (var i in orderprod)
             Products.Add(i);
+        Product.Images = new();
+        Product.CurrentImage = "";
     }
 
     #region Commands
@@ -75,7 +96,7 @@ public class AdminProductPageViewModel : BaseViewModel
     public bool AddCommandCanExecute(object? obj)
     {
         if (isEditting) return false;
-        if (_addVisible && Product?.ProductName?.Length >= 3 && Product?.ProductDescription?.Length >= 2 && Product?.Price > 0&&!string.IsNullOrEmpty(Product?.Category?.Name) )
+        if (_addVisible && Product?.ProductName?.Length >= 3 && Product?.ProductDescription?.Length >= 2 && Product?.Price > 0 && !string.IsNullOrEmpty(Product?.Category?.Name))
             return true;
         return false;
     }
@@ -115,6 +136,7 @@ public class AdminProductPageViewModel : BaseViewModel
             Product.SetProduct(_prod);
             Category = Product.Category;
             ProductPrice = _prod.Price.ToString();
+            ProductQuantity = _prod.Quantity.ToString();
             isEditting = true;
         }
         else
@@ -123,7 +145,8 @@ public class AdminProductPageViewModel : BaseViewModel
             _addVisible = true;
             using var db = new AppDataContext();
             var pr = db.Products.FirstOrDefault(x => x.Id == Product.Id);
-            Product.Category = Category;
+            var cat=db.Categories.FirstOrDefault(z=> z.Name ==Category.Name);
+            Product.Category = cat;
             pr.SetProduct(Product);
             db.SaveChanges();
             Product = new();
@@ -148,15 +171,18 @@ public class AdminProductPageViewModel : BaseViewModel
     }
     public void DeleteCommandExecute(object? obj)
     {
-        using var db = new AppDataContext();
-        var _lw = obj as ListView;
-        var _pr = _lw?.SelectedItem as Product;
-        if (_pr is null) return;
+        if (MessageBox.Show("Are sure to delete this product?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+        {
+            using var db = new AppDataContext();
+            var _lw = obj as ListView;
+            var _pr = _lw?.SelectedItem as Product;
+            if (_pr is null) return;
 
-        var pr = db.Products.FirstOrDefault(x => x.Id == _pr.Id);
-        db.Products.Remove(pr);
-        db.SaveChanges();
-        RefreshDataSource();
+            var pr = db.Products.FirstOrDefault(x => x.Id == _pr.Id);
+            db.Products.Remove(pr);
+            db.SaveChanges();
+            RefreshDataSource();
+        }
     }
 
     #endregion
@@ -169,6 +195,9 @@ public class AdminProductPageViewModel : BaseViewModel
         var window = new AdminEditProductImagesWindowView();
         var data = new AdminEditProductImagesWindowViewModel();
         data.Refresh();
+        for (int i = 0; i < Product.Images.Count; i++)
+            if (Product.Images[i] == @"https://res.cloudinary.com/doolsly8j/image/upload/v1724926263/nm2zhsf8uqfwdwjehkex.png")
+                Product.Images.Remove(Product.Images[i]);
         data.ProductImages = Product.Images;
         data.CoverImage = Product.CoverImage;
         window.DataContext = data;

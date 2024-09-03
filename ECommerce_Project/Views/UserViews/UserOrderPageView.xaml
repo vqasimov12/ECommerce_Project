@@ -105,8 +105,16 @@ Value="{Binding Product.RatingView, Mode=TwoWay}" IsReadOnly="True" ItemSize="14
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
+                                    <GridViewColumn  Header="Details" Width="80">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button  Command="{Binding ElementName=OrderList,Path= DataContext.DetailsCommand}" CommandParameter="{Binding}" Background="#FF5722"  Padding="0" Width="60" Height="30">
+                                                    <materialDesign:PackIcon Kind="Settings" />
+                                                </Button>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
 
-                                
                                 </GridView>
                             </ListView.View>
                         </ListView>

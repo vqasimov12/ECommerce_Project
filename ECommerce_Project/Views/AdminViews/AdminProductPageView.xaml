@@ -53,7 +53,7 @@
                 Background="Transparent"
                 Foreground="#fef3d6" />
 
-                <TextBox Text="{Binding Product.Quantity, UpdateSourceTrigger=PropertyChanged}" Width="300" Height="30"  Margin="15" Style="{StaticResource MaterialDesignTextBox}"
+                <TextBox Text="{Binding ProductQuantity, UpdateSourceTrigger=PropertyChanged}" Width="300" Height="30"  Margin="15" Style="{StaticResource MaterialDesignTextBox}"
                 VerticalAlignment="Top" 
                 materialDesign:HintAssist.Hint="Product Quantity"
                 Background="Transparent"

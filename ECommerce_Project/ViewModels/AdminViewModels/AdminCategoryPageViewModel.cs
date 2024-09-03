@@ -24,7 +24,6 @@ public class AdminCategoryPageViewModel : BaseViewModel
 
         RefreshCategories();
     }
-
     public void RefreshCategories()
     {
         Categories = new();
@@ -67,7 +66,7 @@ public class AdminCategoryPageViewModel : BaseViewModel
         }
         catch
         {
-            MessageBox.Show("");
+            MessageBox.Show("Can not add Category. Please try another category Name","Dublicate",MessageBoxButton.OK,MessageBoxImage.Stop);
         }
     }
 

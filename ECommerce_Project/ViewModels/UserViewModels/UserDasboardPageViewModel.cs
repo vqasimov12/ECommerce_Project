@@ -166,7 +166,10 @@ public class UserDasboardPageViewModel : BaseViewModel
     {
         var page = obj as Page;
         var _page = App.Container.GetInstance<LoginPageView>();
-        _page.DataContext = App.Container.GetInstance<LoginPageViewModel>();
+        var dataContext = App.Container.GetInstance<LoginPageViewModel>();
+        dataContext.Email = "";
+        dataContext.Password = "";
+        _page.DataContext = dataContext;
         var window = NavigationWindow.GetWindow(page);
         window.WindowState= WindowState.Normal;
         window.Height = 450;
