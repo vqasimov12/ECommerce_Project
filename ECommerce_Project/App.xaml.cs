@@ -8,8 +8,8 @@ using ECommerce_Project.Views.AdminViews;
 using ECommerce_Project.ViewModels.AdminViewModels;
 using ECommerce_Project.ViewModels.UserViewModels;
 using Syncfusion.Licensing;
-using System.Windows.Controls;
-using System.Diagnostics;
+using System.Text.Json;
+using System.IO;
 
 namespace ECommerce_Project;
 public partial class App : Application
@@ -24,6 +24,26 @@ public partial class App : Application
         Container.RegisterSingleton<AppDataContext>();
         RegisterViews();
         RegisterViewModels();
+    }
+
+    public static string GetConnectionString()
+    {
+        string jsonFilePath = "../../../appsettings.json";
+
+        string jsonString = File.ReadAllText(jsonFilePath);
+
+        using (JsonDocument doc = JsonDocument.Parse(jsonString))
+        {
+            if (doc.RootElement.TryGetProperty("ConnectionStrings", out JsonElement connectionStringsElement) &&
+                connectionStringsElement.TryGetProperty("DbConnection", out JsonElement dbConnectionElement))
+            {
+                return dbConnectionElement.GetString();
+            }
+            else
+            {
+                throw new InvalidOperationException("Connection string 'DbConnection' not found in appsettings.json");
+            }
+        }
     }
 
     void RegisterViews()

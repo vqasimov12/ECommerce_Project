@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Windows.Forms;
 
 namespace ECommerce_Project.Entity.Models;
@@ -29,7 +30,6 @@ public class AppDataContext : DbContext
             SaveChanges();
             var prod = new Product
             {
-
                 ProductName = "Product1",
                 ProductDescription = "Desciption1",
                 RateCount = 1,
@@ -51,9 +51,11 @@ public class AppDataContext : DbContext
             Database.EnsureCreated();
 
     }
+ 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ECommerceProject;Integrated Security=True;");
+        var connectionString = App.GetConnectionString();
+        optionsBuilder.UseSqlServer(connectionString);
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
