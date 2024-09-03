@@ -91,16 +91,20 @@ git clone https://github.com/vqasimov12/ECommerce_Project.git
 
 Contributions are welcome! Please open an issue or submit a pull request.
 
-###Accounts
+# Default Accounts
 
--**Default User:
+For ease of testing and initial setup, the following default accounts are provided. Please change these credentials immediately after the initial setup for security purposes.
 
-  -**Email:"qasimov.vaqif512@gmail.com"
-  
-  -**Password:"user123"
+## Admin Account
 
--**Admin
+- **Username**: admin@gmail.com
+- **Password**: admin123
 
-  -**Email:"admin@gmail.com"
-  
-  -**Password:"admin123"
+## User Account
+
+- **Username**: qasimov.vaqif512@gmail.com
+- **Password**: user123
+
+
+
+> **Note**: These default accounts are intended for development and testing purposes only. Ensure to update the passwords and manage accounts securely in a production environment.
