@@ -31,7 +31,7 @@ This is a desktop-based e-commerce application built using Windows Presentation 
 - **Material Design in XAML**: Provides modern UI components and theming.
 - **Syncfusion**: For advanced UI components like rating controls.
 - **Cloudinary**: Used for image storage and management.
-- **Email Service**: For sending sign-up confirmations and order receipts to users, implemented using SMTP (e.g., SendGrid, Gmail, or any SMTP provider).
+- **Email Service**: For sending sign-up confirmations and order receipts to users, implemented using SMTP.
 - **PDF Generation**: Functionality for generating and downloading invoices and reports in PDF format.
 
 ## Prerequisites
