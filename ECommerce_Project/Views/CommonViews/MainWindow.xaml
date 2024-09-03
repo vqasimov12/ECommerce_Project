@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ECommerce_Project.Views.CommonViews"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" ShowsNavigationUI="False" WindowStyle="None" MinHeight="440" MinWidth="795" WindowStartupLocation="CenterScreen"  Width="800">
+        Title="MainWindow" Height="450" ShowsNavigationUI="False" WindowStyle="None" MinHeight="440" MinWidth="795" WindowStartupLocation="CenterScreen"  Background="White" Width="800">
     <NavigationWindow.Content>
         <Frame />
     </NavigationWindow.Content>
