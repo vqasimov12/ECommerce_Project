@@ -4,10 +4,11 @@ using ECommerce_Project.ViewModels.CommonViewModels;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows.Input;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
 using Microsoft.EntityFrameworkCore;
 using ECommerce_Project.Views.AdminViews;
+using System.Text.RegularExpressions;
+using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
 
 namespace ECommerce_Project.ViewModels.AdminViewModels;
 public class AdminProductPageViewModel : BaseViewModel
@@ -18,12 +19,25 @@ public class AdminProductPageViewModel : BaseViewModel
     private bool _addVisible = true;
     private Category category;
     private bool isEditting = false;
+    private string productPrice;
 
     public Product Product { get => product; set { product = value; OnPropertyChanged(); } }
-    public Category Category { get => category; set { category = value; OnPropertyChanged(); } }
+    public Category Category { get => category; set { category = value; Product.Category = value; OnPropertyChanged(); } }
     public ObservableCollection<Category> Categories { get => categories; set { categories = value; OnPropertyChanged(); } }
     public ObservableCollection<Product> Products { get => products; set { products = value; OnPropertyChanged(); } }
-
+    public string ProductPrice
+    {
+        get => productPrice; set
+        {
+            if (Regex.IsMatch(value, @"^[0-9]{0,6}(?:\.[0-9]{0,2})?$") || value == "")
+            {
+                productPrice = value; double i;
+                if (double.TryParse(value, out i))
+                    Product.Price = i;
+                OnPropertyChanged();
+            }
+        }
+    }
     public AdminProductPageViewModel()
     {
         Product = new();
@@ -40,6 +54,9 @@ public class AdminProductPageViewModel : BaseViewModel
         Categories = new();
         Products = new();
         Product = new();
+        _addVisible = true;
+        Category = new();
+        ProductPrice = "";
         isEditting = false;
         using var db = new AppDataContext();
         var ordercat = db.Categories.OrderBy(x => x.Id);
@@ -58,7 +75,7 @@ public class AdminProductPageViewModel : BaseViewModel
     public bool AddCommandCanExecute(object? obj)
     {
         if (isEditting) return false;
-        if (_addVisible && Product.ProductName?.Length >= 3 && Product.ProductDescription?.Length >= 2 && Product.Price > 0 && Category is not null)
+        if (_addVisible && Product?.ProductName?.Length >= 3 && Product?.ProductDescription?.Length >= 2 && Product?.Price > 0&&!string.IsNullOrEmpty(Product?.Category?.Name) )
             return true;
         return false;
     }
@@ -81,7 +98,7 @@ public class AdminProductPageViewModel : BaseViewModel
     public bool EditCommandCanExecute(object? obj)
     {
         if (isEditting)
-            return Product.Price > 0 && Product.ProductName?.Length > 2 && Product.ProductDescription?.Length >= 3 && Product.Category.Name is not null;
+            return Product.Price > 0 && Product.ProductName?.Length > 2 && Product.ProductDescription?.Length >= 3 && !string.IsNullOrEmpty(Product?.Category?.Name);
         var lw = obj as ListView;
         return lw?.SelectedItem is not null;
     }
@@ -95,11 +112,9 @@ public class AdminProductPageViewModel : BaseViewModel
             if (lw is null) return;
             var _prod = lw.SelectedItem as Product;
             if (_prod is null) return;
-            using var db = new AppDataContext();
-            _prod = db.Products.Include(z => z.Category).FirstOrDefault(x => x.Id == _prod.Id);
             Product.SetProduct(_prod);
-            Product.CoverImage = _prod.CoverImage;
             Category = Product.Category;
+            ProductPrice = _prod.Price.ToString();
             isEditting = true;
         }
         else
@@ -108,11 +123,8 @@ public class AdminProductPageViewModel : BaseViewModel
             _addVisible = true;
             using var db = new AppDataContext();
             var pr = db.Products.FirstOrDefault(x => x.Id == Product.Id);
-
-            Product.Quantity ??= 0;
             Product.Category = Category;
             pr.SetProduct(Product);
-            pr.CoverImage = Product.CoverImage;
             db.SaveChanges();
             Product = new();
             Category = new();
@@ -143,8 +155,6 @@ public class AdminProductPageViewModel : BaseViewModel
 
         var pr = db.Products.FirstOrDefault(x => x.Id == _pr.Id);
         db.Products.Remove(pr);
-        isEditting = false;
-        _addVisible = true;
         db.SaveChanges();
         RefreshDataSource();
     }
@@ -157,7 +167,8 @@ public class AdminProductPageViewModel : BaseViewModel
     public void SelectImageCommandExecute(object? obj)
     {
         var window = new AdminEditProductImagesWindowView();
-        var data = App.Container.GetInstance<AdminEditProductImagesWindowViewModel>();
+        var data = new AdminEditProductImagesWindowViewModel();
+        data.Refresh();
         data.ProductImages = Product.Images;
         data.CoverImage = Product.CoverImage;
         window.DataContext = data;

@@ -9,13 +9,13 @@ using System.Windows.Input;
 namespace ECommerce_Project.ViewModels.AdminViewModels;
 public class AdminEditProductImagesWindowViewModel : BaseViewModel
 {
-    public ObservableCollection<string> ProductImages { get; set; } = new ObservableCollection<string>();
     private string _coverImage;
     private string _selectedImage;
+    private ObservableCollection<string> productImages = new ObservableCollection<string>();
 
+    public ObservableCollection<string> ProductImages { get => productImages; set { productImages = value; OnPropertyChanged(); }}
     public string CoverImage { get => _coverImage; set { _coverImage = value; OnPropertyChanged(); } }
     public string SelectedImage { get => _selectedImage; set { _selectedImage = value; OnPropertyChanged(); } }
-
 
     public AdminEditProductImagesWindowViewModel()
     {
@@ -23,6 +23,13 @@ public class AdminEditProductImagesWindowViewModel : BaseViewModel
         DeleteImageCommand = new RelayCommand(DeleteImageCommandExecute);
         SetCoverImageCommand = new RelayCommand(SetCoverImageCommandExecute, SetCoverImageCommandCanExecute);
         SaveCommand = new RelayCommand(SaveCommandExecute);
+    }
+
+    public void Refresh()
+    {
+        ProductImages = new();
+        CoverImage = "";
+        SelectedImage = "";
     }
 
     #region Commands

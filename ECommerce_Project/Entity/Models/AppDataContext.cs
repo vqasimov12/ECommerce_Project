@@ -21,11 +21,6 @@ public class AppDataContext : DbContext
     {
         modelBuilder.Entity<Category>().HasIndex(x => x.Name).IsUnique();
         modelBuilder.Entity<User>().HasIndex(x => x.Email).IsUnique();
-        modelBuilder.Entity<User>()
-                    .HasMany(u => u.Orders)
-                    .WithOne(re => re.User)
-                    .HasForeignKey(re => re.UserId)
-                    .OnDelete(DeleteBehavior.Cascade);
 
 
     }

@@ -82,9 +82,10 @@ public class LoginPageViewModel : BaseViewModel
 
         //var user = CheckEmail(Email);
         //if (user is not null)
-        //    if (user.Password == Password)
-        //    {
+        //if (user.Password == Password)
+        //{
         //        using var db = new AppDataContext();
+        //var user = db.Users.FirstOrDefault();
         //        var page = obj as Page;
         //        if (page is null) return;
         //        var window = Window.GetWindow(page);

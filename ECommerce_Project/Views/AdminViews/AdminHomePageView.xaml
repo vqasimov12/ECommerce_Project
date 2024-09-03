@@ -4,10 +4,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ECommerce_Project.Views.AdminViews"
-      xmlns:materialdesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:materialdesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="700" d:DesignWidth="800"
       Title="AdminHomePageView">
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Page.Resources>
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -50,8 +53,21 @@
             </Border>
             <!--#endregion-->
 
-            <!--#region Select DateTime -->
+            <!--#region Total Products -->
             <Border Grid.Column="2" Background="#007B7F" Padding="10" Margin="5" CornerRadius="10">
+                <StackPanel Orientation="Horizontal">
+                    <materialdesign:PackIcon Kind="ShoppingCart" Width="50" Foreground="White" Height="45"/>
+                    <StackPanel Margin="2 0 0 0">
+                        <TextBlock Text="Total " FontSize="19" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock  Margin="-8 0 0 0" Text=" Products Sold" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text="{Binding TotalProductsSold}" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <!--#endregion-->
+
+            <!--#region Select DateTime -->
+            <Border Grid.Column="3" Background="#007B7F" Padding="10" Margin="5" CornerRadius="10">
                 <StackPanel >
                     <StackPanel Orientation="Horizontal" Margin="8 0 0 0">
                         <materialdesign:PackIcon Kind="DateRange" Width="50" Foreground="White" Height="50"/>
@@ -69,24 +85,134 @@
             </Border>
             <!--#endregion-->
 
-            <!--#region Total Customers -->
-            <Border Grid.Column="3" Background="#007B7F" Padding="10" Margin="5" CornerRadius="10">
-                <StackPanel Orientation="Horizontal">
-                    <materialdesign:PackIcon Kind="AccountMultiple" Width="50" Foreground="White" Height="50"/>
-                    <StackPanel Margin="8 0 0 0">
-                        <TextBlock Text="Total " FontSize="19" FontWeight="Bold" Foreground="White"/>
-                        <TextBlock  Text=" Customers" FontSize="19" FontWeight="Bold" Foreground="White"/>
-                        <TextBlock Text="{Binding TotalCustomerCount}" FontSize="30" Foreground="White" FontWeight="Bold"/>
+
+
+        </Grid>
+
+        <ScrollViewer Grid.Row="1">
+            <Grid Margin="5 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+
+                <Border Grid.Row="0" Background="#007B7F" Padding="15" Margin="5" CornerRadius="10">
+                    <StackPanel>
+                        <TextBlock Text="Top-Selling Product" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0 0 0 10"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Margin="10 10 0 0">
+                                <TextBlock HorizontalAlignment="Center" Text="Image" FontSize="16" FontWeight="Bold" Foreground="Yellow"/>
+                                <Image Source="{Binding TopSellingProduct.CoverImage}" Height="60" Width="50" Stretch="Uniform"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="10 10 0 0">
+                                <TextBlock Foreground="Yellow"  HorizontalAlignment="Center" Text="ID " FontSize="16" FontWeight="Bold" />
+                                <TextBlock FontFamily="Times new Roman" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 12 0 0"   Text="{Binding TopSellingProduct.Id}" FontSize="16" Foreground="White"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Margin="10 10 0 0">
+                                <TextBlock HorizontalAlignment="Center" Text="Name" FontSize="16" FontWeight="Bold" Foreground="Yellow"/>
+                                <TextBlock FontFamily="Times new Roman" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 12 0 0"  Foreground="White" Text="{Binding TopSellingProduct.ProductName}" FontSize="16" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3" Margin="10 10 0 0">
+                                <TextBlock HorizontalAlignment="Center" Text="Price" FontSize="16" FontWeight="Bold" Foreground="Yellow"/>
+                                <TextBlock FontFamily="Times new Roman" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 12 0 0"   Text="{Binding TopSellingProduct.Price}" FontSize="16" Foreground="White"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="4" Margin="10 10 0 0">
+                                <TextBlock HorizontalAlignment="Center" Text="Quantity" FontSize="16" FontWeight="Bold" Foreground="Yellow"/>
+                                <TextBlock FontFamily="Times new Roman" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 12 0 0"  Foreground="White" Text="{Binding TopSellingProduct.Quantity}" FontSize="16" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="5" Margin="10 10 0 0">
+                                <TextBlock HorizontalAlignment="Center" Text="Category     " FontSize="16" FontWeight="Bold" Foreground="Yellow"/>
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding TopSellingProduct.Category.Name}" FontSize="16" Foreground="White"/>
+                            </StackPanel>
+
+                        </Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Top-Selling Product Count:" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0 0 0 10"/>
+                            <TextBlock Text="{Binding TopSelledCount}" FontSize="22" FontWeight="Bold" Foreground="DarkGray" Margin="10 0 0 10"/>
+
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </Border>
-            <!--#endregion-->
+                </Border>
 
-        </Grid>
-        <Grid Grid.Row="1">
-            <Border CornerRadius="10" Background="#cfcfcf" Margin="5 10 ">
+                <!-- Total Products Sold -->
+                <Border Grid.Row="2" Background="#007B7F" Padding="10" Margin="5" CornerRadius="10">
+                    <StackPanel Orientation="Horizontal">
+                        <materialdesign:PackIcon Kind="User" Width="50" Foreground="White" Height="50" Margin="0 10 0 0"/>
+                        <StackPanel Margin="8 0 0 0">
+                            <TextBlock Text="Total Customers" FontSize="20" FontWeight="Bold" Foreground="White"/>
+                            <TextBlock Text="{Binding TotalCustomerCount}" FontSize="30" Margin="5 0 0 0" Foreground="White" FontWeight="Bold"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
 
-            </Border>
-        </Grid>
+                <!-- Low Stock Products -->
+                <Border Grid.Row="4" Background="#FF5722" Padding="10" Margin="5" CornerRadius="10">
+                    <StackPanel Orientation="Horizontal">
+                        <materialdesign:PackIcon Kind="AlertCircle" Width="50" Foreground="White" Height="50"/>
+                        <StackPanel Margin="8 0 0 0">
+                            <TextBlock Text="Low Stock Products" FontSize="20" FontWeight="Bold" Foreground="White"/>
+
+                            <ScrollViewer Visibility="{Binding ListVisiblity, Converter={StaticResource BooleanToVisibilityConverter}}" Background="LightGray"
+              HorizontalScrollBarVisibility="Auto"
+              VerticalScrollBarVisibility="Auto">
+
+                                <ListView x:Name="list"
+              MinHeight="100"
+              ScrollViewer.CanContentScroll="True"
+              ItemsSource="{Binding LowStockProducts}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Image" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Image Source="{Binding CoverImage}" Width="50" Height="50" Stretch="UniformToFill"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="Product Name" DisplayMemberBinding="{Binding ProductName}" Width="117"/>
+                                            <GridViewColumn Header="Rating">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <syncfusion:SfRating ItemsCount="5" Precision="Exact" Width="100"
+                                                 Value="{Binding RatingView, Mode=TwoWay}"
+                                                 IsReadOnly="True" ItemSize="12"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+
+                                            <GridViewColumn Header="Quantity">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Quantity}" Margin="10 0 0 0"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+
+                            </ScrollViewer>
+
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

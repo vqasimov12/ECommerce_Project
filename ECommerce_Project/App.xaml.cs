@@ -68,8 +68,6 @@ public partial class App : Application
     }
     protected override void OnStartup(StartupEventArgs e)
     {
-        var window = new LoadingWindowView();
-        window.Show();
         var view = Container.GetInstance<MainWindow>();
         var page = Container.GetInstance<LoginPageView>();
         page.DataContext = Container.GetInstance<LoginPageViewModel>();

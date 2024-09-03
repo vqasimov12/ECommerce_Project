@@ -17,6 +17,4 @@ public class ProductView : NotifyPropertyChangedService
     public Product Product { get => product; set { product = value; OnPropertyChanged(); TotalPrice = Product?.Price * Count; } }
     public double? TotalPrice { get => Product.Price * Count; set { totalPrice = Product?.Price * Count; OnPropertyChanged(); } }
     public int? Count { get => count; set { count = value; OnPropertyChanged(); TotalPrice = Product?.Price * Count; } }
-    public virtual Order Order { get; set; }
-    public int OrderId { get; set; }
 }

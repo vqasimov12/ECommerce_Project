@@ -8,16 +8,16 @@ public class Product : NotifyPropertyChangedService
     private string? productName;
     private string? productDescription;
     private double? price;
+    private string coverImage = "";
     private int? quantity;
     private Category category;
     private int categoryId;
-    private string? likeImage;
     private int rateCount;
     private double rating;
     private double ratingView;
-    private ObservableCollection<string> images=[];
-    private string coverImage="";
-    private string currentImage="";
+    private ObservableCollection<string> images = [];
+    private string currentImage = "";
+    private string? likeImage;
 
     public Product()
     {
@@ -36,21 +36,21 @@ public class Product : NotifyPropertyChangedService
     public Category Category { get => category; set { category = value; OnPropertyChanged(); } }
     public int? Quantity { get => quantity; set { quantity = value; OnPropertyChanged(); } }
     public string? LikeImage { get => likeImage; set { likeImage = value; OnPropertyChanged(); } }
-    
-    public ObservableCollection<string> Images { get => images; set  { images = value; OnPropertyChanged(); }}
-    public string CoverImage { get => coverImage; set { coverImage = value; OnPropertyChanged(); }}
-    public string CurrentImage { get => currentImage; set { currentImage = value; OnPropertyChanged(); }}
+
+    public ObservableCollection<string> Images { get => images; set { images = value; OnPropertyChanged(); } }
+    public string CoverImage { get => coverImage; set { coverImage = value; OnPropertyChanged(); } }
+    public string CurrentImage { get => currentImage; set { currentImage = value; OnPropertyChanged(); } }
 
     //rating
     public double RatingView { get => ratingView; set { ratingView = value; OnPropertyChanged(); } }
     public double Rating { get => rating; set { rating = value; OnPropertyChanged(); RatingView = Rating / RateCount; } }
     public int RateCount { get => rateCount; set { rateCount = value; OnPropertyChanged(); RatingView = Rating / RateCount; } }
-    
+
     public void SetProduct(Product other)
     {
         ProductName = other.ProductName;
         ProductDescription = other.ProductDescription;
-        CurrentImage= other.CurrentImage;
+        CurrentImage = other.CurrentImage;
         Id = other.Id;
         CategoryId = other.CategoryId;
         Category = other.Category;
