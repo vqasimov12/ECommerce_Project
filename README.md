@@ -90,3 +90,12 @@ git clone https://github.com/vqasimov12/ECommerce_Project.git
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request.
+
+##Accounts
+-**Default User:
+  -**Email:"qasimov.vaqif512@gmail.com"
+  -**Password:"user123"
+
+-**Admin
+  -**Email:"admin@gmail.com"
+  -**Password:"admin123"
