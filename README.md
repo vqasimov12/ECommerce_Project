@@ -19,7 +19,7 @@ This is a desktop-based e-commerce application built using Windows Presentation 
 ### Admin Features
 - **Product Management**: Create, edit, and delete products.
 - **Category Management**: Add, edit, and remove categories.
-- **User Management**: View and delete users from the system.
+- **User Management**: View users .
 - **Statistics Dashboard**: View sales, user statistics, and income reports.
 - **Download Reports**: Download financial reports and order receipts in PDF format.
 
